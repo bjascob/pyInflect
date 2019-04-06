@@ -1,0 +1,22 @@
+
+** Entries that violate number of form entries in README
+be has 8, wit has 5
+bullshit.V = ['bullshitted']
+may.V = ['might', 'may']
+only.A = ['onliest']
+
+
+** Words not in AGID
+most.V          AGID has most.N
+affectionate.A  AGID has affectionatenesses.N
+indulgent.A     No .A form of this word
+more.A          AGID has more.N
+indistinct.A    AGID has indistinction.N
+.. many, many more
+
+** Errors (word/lemma tag -> inflection)
+Err:  less/less JJR -> lesser           I think this is incorrectly being tagged as JJR (should be JJ?)
+Err:  people/people NNS -> peoples      people is plural but AGID list the plural as "peoples"
+Err:  hating/hat VBG -> hatting         Spacy gives the lemma of "hating" as "hat".  (Should be "hate"?)
+Err:  feelings/feeling NNS -> feeling   infl.csv entry: feeling,N,feeling
+.. many, many more
