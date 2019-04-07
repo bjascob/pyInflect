@@ -5,8 +5,10 @@ This module is based on the **[Automatically Generated Inflection Database (AGID
 
 It is designed as an extension for **[Spacy](https://github.com/explosion/spaCy)** and will return the the inflected form of a word based on a supplied Penn Treekbank part-of-speech tag.  It can also be used a stanalone module outside of Spacy.
 
+See the `scripts` directory for examples and tests of the system.
+
 ## Usage as an extension to Spacy
-To use as an extension to Spacy, first import the module.  This will create a new `infect` method for each Spacy Token that takes in a Penn Treebank tag.  The method returns the inflected form of the token's lemma based on the supplied treekbank tag.
+To use as an extension to Spacy, first import the module.  This will create a new `inflect` method for each Spacy Token that takes in a Penn Treebank tag.  The method returns the inflected form of the token's lemma based on the supplied treekbank tag.
 
 ```
 > import pyinflect
@@ -16,14 +18,15 @@ examples
 ```
 
 ## Usage Standalone
-To use as a standalone module first import the `InflectionEngine` and then call the engine's `getInflection` method.
+To use standalone import the method `getInflection` and then call it directly.
 ```
-> from pyinflect import InflectionEngine
-> InflectionEngine().getInflection('example', 'NNS')
+> from pyinflect import getInflection
+> getInflection('example', 'NNS')
 examples
 ```
 
 ## Known Issues:
-* Forms of the verb "be" are not completely specified by the treekbank tag.  When the inflected form is ambiguous, a list of possible candidates is returned.  This applies to "was"/"were" and "am"/"are".
+See KnownIssues.txt in the main directory for more specifics.
+* Forms of the verb "be" is not completely specified by the treekbank tag.  When the inflected form is ambiguous, a list of possible candidates is returned.  This applies to "was"/"were" and "am"/"are".
 * The AGID data is created by a 3rd party and not maintained here.  Some lemmas are not in that data file, infl.csv, and thus can not be inflected.
 * In some cases the AGID may not contain the best inflection of the word.  For instance, lemma "people" with tag "NNS" will return "peoples" where you are likely to want the word "people" which is also plural.

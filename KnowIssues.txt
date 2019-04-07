@@ -19,4 +19,16 @@ Err:  less/less JJR -> lesser           I think this is incorrectly being tagged
 Err:  people/people NNS -> peoples      people is plural but AGID list the plural as "peoples"
 Err:  hating/hat VBG -> hatting         Spacy gives the lemma of "hating" as "hat".  (Should be "hate"?)
 Err:  feelings/feeling NNS -> feeling   infl.csv entry: feeling,N,feeling
+
+"only": only has the superlative form "onliest" but no comparative form.
+"methinks": only has the form "methought" in the past (VBD).
+"be" and "wit" are special as you already noticed.
+Modal verbs are also exceptional:
+    "may": may, mayst, might
+    "shall": shall, shalt, should
+    "can": can, canst, could
+    "will": will, wilt, would, wouldst
+    "can" and "will" are also problematic as they have other non-modal senses so "can, canned, canning, cans" and
+    "will, willed, willing, wills" are also acceptable.
+
 .. many, many more

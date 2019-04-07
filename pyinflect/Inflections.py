@@ -120,11 +120,10 @@ class Inflections(object):
         #   RB: Adverb 	                -> base form (base form / lemma
         #   RBR: Adverb, comparative    -> 1st form
         #   RBS: Adverb, superlative    -> 2nd form
-        #   RP: Particle                -> base form / lemma
         elif pos=='A':
-            if tag not in ['JJ', 'JJR', 'JJS', 'RB', 'RBR', 'RBS', 'RP']:
+            if tag not in ['JJ', 'JJR', 'JJS', 'RB', 'RBR', 'RBS']:
                 raise ValueError('Unrecognized Treebank tag for pos=A: %s' % tag)
-            if tag in ['JJ', 'RB', 'RP']:
+            if tag in ['JJ', 'RB']:
                 return lemma
             elif tag in ['JJR', 'RBR'] and nforms>0:
                 return forms[0]

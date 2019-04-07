@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+import sys
+sys.path.insert(0, '..')    # make '..' first in the lib search path
 import spacy
 import pyinflect
 
@@ -18,7 +20,7 @@ if __name__ == '__main__':
     doc = nlp(sent)
     for word in doc:
         ptype = word.tag_[0]
-        if ptype=='N' or ptype=='V' or ptype=='R' or ptype=='J':
+        if ptype in ['N', 'V', 'R', 'J'] and word.tag_!='RP':
             tag_to_use = word.tag_
             infl = word._.inflect(tag_to_use)
             if not infl:
