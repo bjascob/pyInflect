@@ -19,7 +19,7 @@ setuptools.setup(
     long_description_content_type='text/markdown',
     url='https://github.com/bjascob/pyinflect',
     include_package_data=True,
-    package_data={'':['infl.csv']},
+    package_data={'':['*.csv']},
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 2",
