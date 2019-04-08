@@ -3,12 +3,13 @@ import sys
 sys.path.insert(0, '..')    # make '..' first in the lib search path
 import spacy
 import pyinflect
+from   MiscUtils import ignoreWord
 
 
 if __name__ == '__main__':
 
     # Test setence
-    sent = 'What are my feelings.'
+    sent = 'I seem to be lost.'
 
     # Load Spacy
     print('Loading Spacy model')
@@ -26,7 +27,7 @@ if __name__ == '__main__':
             if not infl:
                 print('None: %s/%s %s' % (word.text, word.lemma_, word.tag_))
                 continue
-            elif infl != word.text.lower() and not isinstance(infl, list):
+            elif infl != word.text and not ignoreWord(word.text):
                 print('Err:  %s/%s %s -> %s' % (word.text, word.lemma_, word.tag_, infl))
             else:
                 print('Good: %s/%s %s -> %s' % (word.text, word.lemma_, word.tag_, infl))

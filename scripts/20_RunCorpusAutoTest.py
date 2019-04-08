@@ -4,6 +4,7 @@ sys.path.insert(0, '..')    # make '..' first in the lib search path
 import spacy
 import nltk
 import pyinflect
+from   MiscUtils import loadNLTKCorpus, ignoreWord
 
 
 if __name__ == '__main__':
@@ -14,25 +15,22 @@ if __name__ == '__main__':
     print_nones = False
     print_errs  = True
 
+    # Matching exceptions to ignore
+    ignores = ['was', 'were', 'am', 'are', "'s", "n't"]
+
     # Load Spacy
     print('Loading Spacy model')
     nlp = spacy.load('en_core_web_sm')
 
     # Load the corpus to test with
     print('Loading corpus')
-    text = nltk.corpus.gutenberg.raw(corp_fn)
-    print('{:,} characters in corpus, truncated to {:,}'.format(len(text), max_chars))
-    text = text[:max_chars]
-    text = text.replace('\n', ' ')
-    sents = nltk.tokenize.sent_tokenize(text)
-    sents = sents[1:-1] # clip the first and last
-    print('Used %d test sentences from corpus' % len(sents))
+    sents = loadNLTKCorpus(corp_fn, max_chars)
+    print('Loaded {:,} test sentences'.format(len(sents)))
     print()
 
     # Loop through the sentences
     print('Processing sentences')
     stats = [0]*5     # total words, getInfl calls, infl None returns, infl good, infl bad
-    verbs = []
     for i, sent in enumerate(sents):
         doc = nlp(sent)
         for word in doc:
@@ -49,7 +47,7 @@ if __name__ == '__main__':
                     if print_nones:
                         print('None: %s/%s %s' % (word.text, word.lemma_, word.tag_))
                     continue
-                elif infl != word.text.lower() and not isinstance(infl, list):
+                elif infl != word.text and not ignoreWord(word.text):
                     stats[3] += 1
                     if print_errs:
                         print('Err:  %s/%s %s -> %s' % (word.text, word.lemma_, word.tag_, infl))
@@ -57,6 +55,6 @@ if __name__ == '__main__':
                     stats[4] += 1
     print()
     print('Tested over %d sentences / %d words, looked up %d inflections' % (len(sents), stats[0], stats[1]))
-    print('%d inflection returned None' % stats[2])
-    print('%d errors / incorrect inflections' % stats[3])
-    print('%d correct inflections' % stats[4])
+    print('{:,} correct inflections'.format(stats[4]))
+    print('{:,} inflections returned None'.format(stats[2]))
+    print('{:,} errors / incorrect inflections'.format(stats[3]))

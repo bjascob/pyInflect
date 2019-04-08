@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # Static analysis checker'
 
 # Disable the following errors

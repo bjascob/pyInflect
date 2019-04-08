@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import setuptools
 
 # There are currently no dependencies so this is fine but note that if
