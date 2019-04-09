@@ -11006,7 +11006,7 @@ bullring,N,bullrings
 bullroarer,N,bullroarers
 bullrush,N,bullrushes
 bullshit,N,bullshits
-bullshit,V,bullshitted/bullshit
+bullshit,V,bullshitted/bullshit/bullshat,<>,bullshitting,bullshits
 bullshitter,N,bullshitters
 bullshot,N,bullshots
 bullsnake,N,bullsnakes
@@ -13998,7 +13998,7 @@ chapter,V,chaptered,<>,chaptering,chapters
 chapterhouse,N,chapterhouses
 chaptrel,N,chaptrels
 chaqueta,N,chaquetas
-char,N,chars/char/charsfish
+char,N,chars/char/chars
 char,V,charred/chared,<>,charring/charing,chars/chares
 chara,N,charas
 charabanc,N,charabancs
@@ -41728,7 +41728,7 @@ iambist,N,iambists
 iambographer,N,iambographers
 iambus,N,iambuses/iambi
 iatrochemist,N,iatrochemists
-ibex,N,ibex/ibexes
+ibex,N,ibex/ibexes/ibices
 ibis,N,ibis/ibises
 ibogaine,N,ibogaines
 ibuprofen,N,ibuprofens
@@ -64405,7 +64405,7 @@ pigwash,N,pigwashes
 pigweed,N,pigweeds
 pika,N,pikas
 pikake,N,pikakes
-pike,N,pikes/pikefish
+pike,N,pikes/pike/pikes
 pike,V,piked,<>,piking,pikes
 pikeblenny,N,pikeblennies/pikeblennyes/pikeblennys
 pikelet,N,pikelets
@@ -74244,7 +74244,7 @@ rivulet,N,rivulets
 rivulus,N,rivuluses/rivulusses/rivuli
 riyal,N,riyals
 riza,N,rizas
-roach,N,roaches/roachfish
+roach,N,roaches/roach/roaches
 roach,V,roached,<>,roaching,roaches
 road,A,roadder/roader,roaddest/roadest
 road,N,roads
@@ -74381,7 +74381,7 @@ rodomontade,V,rodomontaded,<>,rodomontading,rodomontades
 rodomontader,N,rodomontaders
 rodsman,N,rodsmen
 rodster,N,rodsters
-roe,N,roe/roesdeer
+roe,N,roe/roes/roes
 roebuck,N,roebucks/roebuck
 roentgen,N,roentgens
 roentgenize,V,roentgenized,<>,roentgenizing,roentgenizes
@@ -75173,7 +75173,7 @@ sabir,N,sabirs
 sabji,N,sabjis
 sabkha,N,sabkhas
 sable,A,sabler,sablest
-sable,N,sable/sablesanimal
+sable,N,sable/sables/sables
 sable,V,sabled,<>,sabling,sables
 sablefish,N,sablefish/sablefishes
 sabling,N,sabling
@@ -77133,7 +77133,7 @@ seagrass,N,seagrasses
 seagull,N,seagulls
 seahorse,N,seahorses
 seajack,V,seajacked,<>,seajacking,seajacks
-seal,N,seals/seals/sealanimal
+seal,N,seals/seals/seal
 seal,V,sealed,<>,sealing,seals
 sealant,N,sealants
 sealch,N,sealchs
@@ -79776,7 +79776,7 @@ skank,V,skanked,<>,skanking,skanks
 skanker,N,skankers
 skart,N,skarts
 skat,V,skated,<>,skating,skats
-skate,N,skates/skatefish
+skate,N,skates/skate/skates
 skate,V,skated,<>,skating,skates
 skateboard,N,skateboards
 skateboard,V,skateboarded,<>,skateboarding,skateboards
@@ -80701,7 +80701,7 @@ snapback,N,snapbacks
 snapdragon,N,snapdragons
 snapless,N,snapless
 snapline,N,snaplines
-snapper,N,snappers/snapper/snappersfish
+snapper,N,snappers/snapper/snappers
 snappily,A,snappilier,snappiliest
 snappiness,N,snappinesses
 snapping,N,snappings
@@ -81207,7 +81207,7 @@ soldiership,N,soldierships
 soldiery,N,soldieries
 soldo,N,soldi
 sole,A,soler,solest
-sole,N,sole/solesfish
+sole,N,sole/soles/soles
 sole,V,soled,<>,soling,soles
 solecise,V,solecised,<>,solecising,solecises
 solecism,N,solecisms
@@ -97354,7 +97354,7 @@ whitey,N,whiteys
 whither,A,whitherrer/whitherer,whitherrest/whitherest
 whither,V,whithered,<>,whithering,whithers
 whitherward,N,whitherwards
-whiting,N,whitings/whiting/whitingsfish
+whiting,N,whitings/whiting/whitings
 whitish,A,whitisher,whitishest
 whitishness,N,whitishnesses
 whitlavia,N,whitlavias/whitlaviae

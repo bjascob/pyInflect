@@ -14,7 +14,7 @@ class basicTest(unittest.TestCase):
     def testSpacyInflect01(self):
         sent = 'I seem to be eating.'
         doc = self.nlp(sent)
-        self.assertRaises(ValueError, doc[0]._.inflect, 'PRP')
+        self.assertEqual(doc[0]._.inflect('PRP'), None)
 
         self.assertEqual(doc[1]._.inflect('VBN'), 'seemed')
         self.assertEqual(doc[1]._.inflect('VBD'), 'seemed')
@@ -26,12 +26,12 @@ class basicTest(unittest.TestCase):
         self.assertEqual(doc[2]._.inflect('VB'),  None)
 
         self.assertEqual(doc[3]._.inflect('VB'),  'be')
-        self.assertEqual(doc[3]._.inflect('VBD', True),  'was')
-        self.assertEqual(doc[3]._.inflect('VBD', False), 'were')
+        self.assertEqual(doc[3]._.inflect('VBD', 0), 'was')
+        self.assertEqual(doc[3]._.inflect('VBD', 1), 'were')
         self.assertEqual(doc[3]._.inflect('VBN'), 'been')
         self.assertEqual(doc[3]._.inflect('VBG'), 'being')
-        self.assertEqual(doc[3]._.inflect('VBP', True),  'am')
-        self.assertEqual(doc[3]._.inflect('VBP', False), 'are')
+        self.assertEqual(doc[3]._.inflect('VBP', 0),  'am')
+        self.assertEqual(doc[3]._.inflect('VBP', 1), 'are')
         self.assertEqual(doc[3]._.inflect('VBZ'), 'is')
 
         self.assertEqual(doc[4]._.inflect('VBN'), 'eaten')
@@ -41,15 +41,30 @@ class basicTest(unittest.TestCase):
         self.assertEqual(doc[4]._.inflect('VBP'), 'eat')
         self.assertEqual(doc[4]._.inflect('VB'),  'eat')
 
-    def testGetAllInfections01(self):
-        self.assertEqual(pyinflect.getAllInflections('awake', 'V'),
-            [('awoke', 'awaked'), ('awoken', 'awaked', 'awoke'), ('awaking',), ('awakes',)])
-        self.assertEqual(pyinflect.getAllInflections('awoke', 'V'), None)
-        self.assertRaises(ValueError, pyinflect.getAllInflections, 'awake', 'VB')
+    def testGetInfections01(self):
+        self.assertEqual(pyinflect.getInflections('awake', 'V'),
+            # default value returned from AGID
+            #{'VB': ('awake',), 'VBP': ('awake',), 'VBD': ('awoke', 'awaked'),
+            # 'VBN': ('awoken', 'awaked', 'awoke'), 'VBG': ('awaking',), 'VBZ': ('awakes',)})
+            # Overrides modified return
+            {'VB': ('awake',), 'VBP': ('awake',), 'VBD': ('awoke', 'awaked'),
+             'VBN': ('awaked',), 'VBG': ('awaking',), 'VBZ': ('awakes',)})
+        self.assertEqual(pyinflect.getInflections('awoke', 'V'), {})
+        self.assertRaises(ValueError, pyinflect.getInflections, 'awake', 'VB')
 
-    def testGetInflection01(self):
-        self.assertEqual(pyinflect.getInflection('squirrel', 'NN'), ('squirrel',))
-        self.assertEqual(pyinflect.getInflection('squirrel', 'NNS'), ('squirrels', 'squirrel'))
+    def testGetInflection02(self):
+        self.assertEqual(pyinflect.getInflections('squirrel', tag='NN'),  {'NN': ('squirrel',)})
+        self.assertEqual(pyinflect.getInflections('squirrel', tag='NNS'), {'NNS': ('squirrels', 'squirrel')})
+
+    def testGetInflection03(self):
+        self.assertEqual(pyinflect.getInflections('watch'),
+            {'NN': ('watch',), 'NNS': ('watches',), 'VB': ('watch',), 'VBP': ('watch',), 'VBD': ('watched',),
+             'VBN': ('watched',), 'VBG': ('watching',), 'VBZ': ('watches',)})
+        self.assertEqual(pyinflect.getInflections('watch', pos_type='V'),
+            {'VB': ('watch',), 'VBP': ('watch',), 'VBD': ('watched',), 'VBN': ('watched',),
+             'VBG': ('watching',), 'VBZ': ('watches',)})
+        self.assertEqual(pyinflect.getInflections('watch', tag='VBD'), {'VBD': ('watched',)})
+        self.assertEqual(pyinflect.getInflections('watch', pos_type='A'), {})
 
     def testCapitalization01(self):
         doc = self.nlp('BRAd Is STANDING.')

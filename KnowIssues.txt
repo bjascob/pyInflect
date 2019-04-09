@@ -1,399 +1,390 @@
 
-Notes from @chrisjbryant
-------------------------
-"only": only has the superlative form "onliest" but no comparative form.
-"methinks": only has the form "methought" in the past (VBD).
-"be" and "wit" are special as you already noticed.
-Modal verbs are also exceptional:
-    "may": may, mayst, might
-    "shall": shall, shalt, should
-    "can": can, canst, could
-    "will": will, wilt, would, wouldst
-    "can" and "will" are also problematic as they have other non-modal senses so "can, canned, canning, cans" and
-    "will, willed, willing, wills" are also acceptable.
-
-Output from 12_CreateOverridesList.py
--------------------------------------
-Word/tag keys that map to more than one inflection (these will not go into the overrides)...
-  abide/VBN -> {'abode', 'abided'}
-  abide/VBZ -> {'abides', 'abode'}
-  appear/VBZ -> {'appears', 'appeares'}
+When testing against the NLTK corpus, the following were seen to map to multiple inflections.
+and may cause issues in your corpus.
+  abide/VBN -> {'abided', 'abode'}
+  abide/VBZ -> {'abode', 'abides'}
+  appear/VBZ -> {'appeares', 'appears'}
   assay/NNS -> {'assays', 'assaies'}
-  attain/VBZ -> {'attains', 'attaines'}
+  attain/VBZ -> {'attaines', 'attains'}
   awake/VBD -> {'awoke', 'awaked', 'awake'}
-  awaken/VBN -> {'awaken', 'awakened'}
-  bad/JJS -> {'worst', 'badest'}
+  awaken/VBN -> {'awakened', 'awaken'}
+  bad/JJS -> {'badest', 'worst'}
   ball/NNS -> {'balls', 'ball'}
-  bathe/VBN -> {'bathed', 'bathe'}
-  bear/VBD -> {'born', 'bear', 'bore', 'borne'}
+  bathe/VBN -> {'bathe', 'bathed'}
+  bear/VBD -> {'born', 'borne', 'bore', 'bear'}
   bear/VBN -> {'born', 'borne'}
   bear/VBZ -> {'beares', 'bears'}
-  beat/VBD -> {'beat', 'beaten'}
-  beat/VBN -> {'beat', 'beaten'}
-  befall/VBD -> {'befell', 'befallen'}
+  beat/VBD -> {'beaten', 'beat'}
+  beat/VBN -> {'beaten', 'beat'}
+  befall/VBD -> {'befallen', 'befell'}
   beget/VBD -> {'begat', 'begotten'}
   beget/VBN -> {'begat', 'begotten'}
-  begin/VBD -> {'begun', 'began'}
-  behold/VBD -> {'behold', 'beheld'}
-  behold/VBN -> {'behold', 'beheld'}
-  bend/VBD -> {'bent', 'bended'}
-  bend/VBN -> {'bent', 'bended'}
-  beseech/VBD -> {'beseech', 'besought'}
+  begin/VBD -> {'began', 'begun'}
+  behold/VBD -> {'beheld', 'behold'}
+  behold/VBN -> {'beheld', 'behold'}
+  bend/VBD -> {'bended', 'bent'}
+  bend/VBN -> {'bended', 'bent'}
+  beseech/VBD -> {'besought', 'beseech'}
   beseech/VBG -> {'besought', 'beseeching'}
   bestow/VBZ -> {'bestows', 'bestowes'}
-  betoken/VBD -> {'betokened', 'betoken'}
-  betoken/VBN -> {'betokened', 'betoken'}
+  betoken/VBD -> {'betoken', 'betokened'}
+  betoken/VBN -> {'betoken', 'betokened'}
   bid/VBD -> {'bidden', 'bid', 'bade'}
   bid/VBN -> {'bidden', 'bid'}
   blacken/VBN -> {'blackened', 'blacken'}
   blank/VBZ -> {'blankes', 'blanks'}
   blast/VBD -> {'blast', 'blasted'}
-  blow/VBD -> {'blown', 'blew'}
+  blow/VBD -> {'blew', 'blown'}
   blow/VBN -> {'blown', 'blowed'}
   blow/VBZ -> {'blows', 'blowes'}
-  bob/VBD -> {'bobbed', 'bob'}
+  bob/VBD -> {'bob', 'bobbed'}
   boil/VBZ -> {'boils', 'boil'}
   braid/VBD -> {'braided', 'braid'}
-  break/VBD -> {'broke', 'broken'}
-  break/VBN -> {'broke', 'broken'}
+  break/VBD -> {'broken', 'broke'}
+  break/VBN -> {'broken', 'broke'}
   break/VBZ -> {'breakes', 'breaks'}
-  brother/NNS -> {'brethren', 'brothers'}
+  brother/NNS -> {'brothers', 'brethren'}
   build/VBD -> {'builded', 'built'}
   build/VBN -> {'builded', 'built'}
   buoy/NNS -> {'buoy', 'buoys'}
   burn/VBD -> {'burned', 'burnt'}
-  burn/VBN -> {'burnt', 'burned'}
-  burn/VBZ -> {'burns', 'burnes'}
-  bustle/NNS -> {'bustle', 'bustles'}
-  cabin/NNS -> {'cabin', 'cabins'}
-  call/VBZ -> {'calles', 'calls'}
+  burn/VBN -> {'burned', 'burnt'}
+  burn/VBZ -> {'burnes', 'burns'}
+  bustle/NNS -> {'bustles', 'bustle'}
+  cabin/NNS -> {'cabins', 'cabin'}
+  call/VBZ -> {'calls', 'calles'}
   camel/NNS -> {'camels', 'camel'}
-  cape/NNS -> {'capes', 'cape'}
-  carol/VBG -> {'caroling', 'carolling'}
-  catch/VBN -> {'catched', 'caught'}
-  charm/VBD -> {'charmed', 'charm'}
-  chasm/NNS -> {'chasms', 'chasm'}
-  choose/VBD -> {'chose', 'chosen'}
+  cape/NNS -> {'cape', 'capes'}
+  carol/VBG -> {'carolling', 'caroling'}
+  catch/VBN -> {'caught', 'catched'}
+  charm/VBD -> {'charm', 'charmed'}
+  chasm/NNS -> {'chasm', 'chasms'}
+  choose/VBD -> {'chosen', 'chose'}
   cleave/VBD -> {'cleaved', 'cleft'}
   cleave/VBN -> {'cleaved', 'cloven', 'cleft'}
   clothe/VBD -> {'clad', 'clothed'}
   clothe/VBN -> {'clad', 'clothed'}
-  coffin/NNS -> {'coffin', 'coffins'}
-  combat/VBD -> {'combated', 'combatted'}
+  coffin/NNS -> {'coffins', 'coffin'}
+  combat/VBD -> {'combatted', 'combated'}
   come/VBD -> {'came', 'come'}
   consent/VBD -> {'consented', 'consent'}
   cook/VBD -> {'cooked', 'cook'}
-  cramp/NNS -> {'cramps', 'cramp'}
+  cramp/NNS -> {'cramp', 'cramps'}
   cry/VBD -> {'cried', 'cryed'}
   cry/VBN -> {'cried', 'cryed'}
-  cry/VBZ -> {'cryes', 'cries'}
+  cry/VBZ -> {'cries', 'cryes'}
   curl/VBZ -> {'curls', 'curles'}
   dance/VBZ -> {'dances', 'dance'}
-  darken/VBD -> {'darkened', 'darkens'}
-  dear/NNS -> {'dears', 'dear'}
+  darken/VBD -> {'darkens', 'darkened'}
+  dear/NNS -> {'dear', 'dears'}
   demur/NNS -> {'demur', 'demurs'}
   denote/VBD -> {'denoted', 'denote'}
   devil/NNS -> {'devil', 'devils'}
   devour/VBD -> {'devoured', 'devour'}
   diamond/NNS -> {'diamonds', 'diamond'}
-  do/VBD -> {'done', 'did'}
-  down/NNS -> {'downs', 'down'}
-  draw/VBD -> {'drew', 'drawn'}
-  draw/VBN -> {'drew', 'drawn'}
-  draw/VBZ -> {'drawes', 'draws'}
-  dream/VBD -> {'dreamed', 'dreamt'}
-  dream/VBN -> {'dreamed', 'dreamt'}
+  do/VBD -> {'did', 'done'}
+  down/NNS -> {'down', 'downs'}
+  draw/VBD -> {'drawn', 'drew'}
+  draw/VBN -> {'drawn', 'drew'}
+  draw/VBZ -> {'draws', 'drawes'}
+  dream/VBD -> {'dreamt', 'dreamed'}
+  dream/VBN -> {'dreamt', 'dreamed'}
   dream/VBZ -> {'dreames', 'dreams'}
-  drink/VBN -> {'drank', 'drunk'}
-  drink/VBZ -> {'drinkes', 'drinks'}
+  drink/VBN -> {'drunk', 'drank'}
+  drink/VBZ -> {'drinks', 'drinkes'}
   drive/VBD -> {'drove', 'driven'}
   dry/VBD -> {'dry', 'dried'}
-  dunce/NNS -> {'dunces', 'dunce'}
-  dwell/VBD -> {'dwelled', 'dwell', 'dwelt'}
-  dwell/VBN -> {'dwelled', 'dwell', 'dwelt'}
-  eat/VBD -> {'ate', 'eaten'}
-  eat/VBN -> {'eat', 'eaten'}
-  edge/NNS -> {'edges', 'edge'}
-  enlighten/VBD -> {'enlighten', 'enlightened'}
-  envelop/VBZ -> {'envelopes', 'envelops'}
-  experience/NNS -> {'experience', 'experiences'}
+  dunce/NNS -> {'dunce', 'dunces'}
+  dwell/VBD -> {'dwelt', 'dwell', 'dwelled'}
+  dwell/VBN -> {'dwelt', 'dwell', 'dwelled'}
+  eat/VBD -> {'eaten', 'ate'}
+  eat/VBN -> {'eaten', 'eat'}
+  edge/NNS -> {'edge', 'edges'}
+  enlighten/VBD -> {'enlightened', 'enlighten'}
+  envelop/VBZ -> {'envelops', 'envelopes'}
+  experience/NNS -> {'experiences', 'experience'}
   exposure/NNS -> {'exposure', 'exposures'}
   fall/VBD -> {'fell', 'fallen'}
   fall/VBN -> {'fell', 'fallen'}
-  fall/VBZ -> {'falles', 'falls'}
-  fat/VBN -> {'fated', 'fatted'}
+  fall/VBZ -> {'falls', 'falles'}
   fear/VBZ -> {'feares', 'fears'}
   feel/VBZ -> {'feels', 'feeles'}
   fibre/NNS -> {'fibres', 'fibre'}
   fife/NNS -> {'fife', 'fifes'}
-  find/VBZ -> {'findes', 'found', 'finds'}
+  find/VBZ -> {'findes', 'finds', 'found'}
   fish/NNS -> {'fish', 'fishes'}
-  flee/VBD -> {'fled', 'flee'}
-  flee/VBN -> {'fled', 'flee'}
-  flood/NNS -> {'floods', 'flood'}
+  flee/VBD -> {'flee', 'fled'}
+  flee/VBN -> {'flee', 'fled'}
+  flood/NNS -> {'flood', 'floods'}
   follow/VBZ -> {'follows', 'followes'}
   forbear/VBD -> {'forbear', 'forbore'}
-  forbid/VBD -> {'forbidden', 'forbad', 'forbid', 'forbade'}
+  forbid/VBD -> {'forbade', 'forbad', 'forbidden', 'forbid'}
   forbid/VBN -> {'forbidden', 'forbid'}
-  forge/NNS -> {'forges', 'forge'}
-  forget/VBD -> {'forgot', 'forgotten'}
-  forget/VBN -> {'forgot', 'forgotten'}
-  forgive/VBD -> {'forgave', 'forgiven'}
+  forge/NNS -> {'forge', 'forges'}
+  forget/VBD -> {'forgotten', 'forgot'}
+  forget/VBN -> {'forgotten', 'forgot'}
+  forgive/VBD -> {'forgiven', 'forgave'}
   forsake/VBD -> {'forsaken', 'forsook'}
   frighten/VBN -> {'frighten', 'frightened'}
-  fulfil/VBD -> {'fulfilled', 'fulfil'}
-  gag/VBN -> {'gagged', 'gaged', 'gag'}
+  fulfil/VBD -> {'fulfil', 'fulfilled'}
+  gag/VBN -> {'gag', 'gaged', 'gagged'}
   game/VBG -> {'game', 'gaming'}
   get/VBD -> {'got', 'gotten'}
   get/VBN -> {'got', 'gotten'}
   gird/VBZ -> {'girt', 'girds'}
   girl/NNS -> {'girl', 'girls'}
-  give/VBD -> {'gave', 'given'}
-  give/VBN -> {'give', 'gave', 'given'}
+  give/VBD -> {'given', 'gave'}
+  give/VBN -> {'given', 'give', 'gave'}
   go/VBD -> {'gone', 'go', 'went'}
-  go/VBG -> {"goin'", 'going'}
-  grave/VBN -> {'graved', 'graven'}
+  go/VBG -> {'going', "goin'"}
+  grave/VBN -> {'graven', 'graved'}
   greet/VBZ -> {'greetes', 'greets'}
-  grip/VBN -> {'gripped', 'griped'}
-  grovel/VBG -> {'groveling', 'grovelling'}
-  grow/VBD -> {'grew', 'grown'}
-  grow/VBZ -> {'growes', 'grows'}
+  grovel/VBG -> {'grovelling', 'groveling'}
+  grow/VBD -> {'grown', 'grew'}
+  grow/VBZ -> {'grows', 'growes'}
   handle/VBD -> {'handled', 'handle'}
   hang/VBD -> {'hanged', 'hung'}
   hang/VBN -> {'hanged', 'hung'}
-  harden/VBN -> {'hardened', 'harden'}
-  hatchway/NNS -> {'hatchway', 'hatchways'}
+  harden/VBN -> {'harden', 'hardened'}
+  hat/VBN -> {'hatted', 'hated'}
+  hatchway/NNS -> {'hatchways', 'hatchway'}
   hear/VBZ -> {'hears', 'heares'}
   hearken/VBD -> {'hearkened', 'hearken'}
   hearken/VBN -> {'hearkened', 'hearken'}
   helm/NNS -> {'helms', 'helm'}
   help/VBZ -> {'helps', 'helpes'}
-  herald/NNS -> {'heralds', 'herald'}
-  hew/VBD -> {'hewn', 'hew', 'hewed'}
+  herald/NNS -> {'herald', 'heralds'}
+  hew/VBD -> {'hew', 'hewn', 'hewed'}
   hew/VBN -> {'hewn', 'hewed'}
   hide/VBD -> {'hidden', 'hid'}
   hide/VBN -> {'hidden', 'hid'}
   inform/VBZ -> {'informes', 'informs'}
   keep/VBZ -> {'keeps', 'keepes'}
   kill/VBZ -> {'killes', 'kills'}
-  kneel/VBD -> {'kneeled', 'knelt'}
+  kneel/VBD -> {'knelt', 'kneeled'}
   knit/VBD -> {'knit', 'knitted'}
   knit/VBN -> {'knit', 'knitted'}
-  knock/VBZ -> {'knockes', 'knocks'}
-  know/VBD -> {'knowes', 'knew', 'known', 'knowed'}
-  know/VBN -> {'knew', 'known'}
+  knock/VBZ -> {'knocks', 'knockes'}
+  know/VBD -> {'known', 'knowed', 'knowes', 'knew'}
+  know/VBN -> {'known', 'knew'}
   know/VBZ -> {'knowes', 'knows'}
-  lamb/NNS -> {'lambs', 'lamb'}
+  lamb/NNS -> {'lamb', 'lambs'}
   lead/VBN -> {'led', 'leaded'}
-  lead/VBZ -> {'leads', 'leades', 'lead'}
-  lean/VBD -> {'leant', 'leaned'}
+  lead/VBZ -> {'leades', 'lead', 'leads'}
+  lean/VBD -> {'leaned', 'leant'}
   lean/VBZ -> {'leans', 'leanes'}
-  leap/VBD -> {'leapt', 'leaped'}
-  leap/VBN -> {'leapt', 'leaped', 'leaps'}
-  learn/VBD -> {'learnt', 'learned'}
-  learn/VBN -> {'learnt', 'learned'}
+  leap/VBD -> {'leaped', 'leapt'}
+  leap/VBN -> {'leaped', 'leaps', 'leapt'}
+  learn/VBD -> {'learned', 'learnt'}
+  learn/VBN -> {'learned', 'learnt'}
   leave/VBN -> {'leaved', 'left'}
   lengthen/VBD -> {'lengthened', 'lengthen'}
-  less/JJR -> {'less', 'lesser'}
+  less/JJR -> {'lesser', 'less'}
   levee/NNS -> {'levee', 'levees'}
   lie/VBD -> {'lay', 'lied'}
-  lie/VBN -> {'lain', 'lay', 'lied'}
-  light/VBD -> {'lighted', 'lit'}
-  light/VBN -> {'lighted', 'lit'}
+  lie/VBN -> {'lay', 'lain', 'lied'}
+  light/VBD -> {'lit', 'lighted'}
+  light/VBN -> {'lit', 'lighted'}
   load/VBZ -> {'loads', 'loades'}
-  long/VBN -> {'long', 'longed'}
+  long/VBN -> {'longed', 'long'}
   look/VBZ -> {'lookes', 'looks'}
-  lord/NNS -> {'lords', 'lord'}
+  lord/NNS -> {'lord', 'lords'}
   lunch/VBD -> {'lunches', 'lunched'}
+  mad/JJS -> {'madest', 'maddest'}
   make/VBN -> {'made', 'make'}
-  man/NNS -> {'men', 'mans'}
-  man/VBD -> {'manned', 'maned'}
-  man/VBN -> {'manned', 'maned'}
+  man/NNS -> {'mans', 'men'}
+  man/VBD -> {'maned', 'manned'}
+  man/VBN -> {'maned', 'manned'}
   manservant/NNS -> {'manservants', 'menservants'}
-  march/NNP -> {'mar.', 'march'}
   mat/VBN -> {'matted', 'mated'}
-  may/NNP -> {'may', 'may.'}
-  mean/VBZ -> {'meanes', 'means'}
+  mean/VBZ -> {'means', 'meanes'}
   medium/NNS -> {'mediums', 'media'}
-  meet/VBN -> {'met', 'meet'}
+  meet/VBN -> {'meet', 'met'}
   memorandum/NNS -> {'memorandums', 'memoranda'}
   meteor/NNS -> {'meteors', 'meteor'}
-  minutia/NNS -> {'minutia', 'minutiae'}
-  mistake/VBD -> {'mistook', 'mistaken'}
-  mount/NNP -> {'mt.', 'mount'}
+  minutia/NNS -> {'minutiae', 'minutia'}
+  mistake/VBD -> {'mistaken', 'mistook'}
   mouth/NNS -> {'mouths', 'mouth'}
-  murmur/NNS -> {'murmur', 'murmurs'}
-  murmur/VBZ -> {'murmur', 'murmurs'}
-  need/VBZ -> {'needs', 'needes'}
-  nostril/NNS -> {'nostrils', 'nostril'}
-  not/RB -> {'not', 'nt'}
-  old/NNP -> {"ol'", 'old'}
+  murmur/NNS -> {'murmurs', 'murmur'}
+  murmur/VBZ -> {'murmurs', 'murmur'}
+  need/VBZ -> {'needes', 'needs'}
+  nostril/NNS -> {'nostril', 'nostrils'}
+  not/RB -> {'nt', 'not'}
   orb/VBD -> {'orbed', 'orb'}
-  orchard/NNS -> {'orchard', 'orchards'}
-  outlaw/VBN -> {'outlawed', 'outlaw'}
+  orchard/NNS -> {'orchards', 'orchard'}
+  outlaw/VBN -> {'outlaw', 'outlawed'}
   overthrow/VBD -> {'overthrew', 'overthrown'}
   overthrow/VBN -> {'overthrew', 'overthrown'}
-  pant/VBD -> {'pant', 'panted'}
-  pat/VBN -> {'patted', 'pated'}
-  patrol/VBG -> {'patrolling', 'patroling'}
+  pant/VBD -> {'panted', 'pant'}
+  pat/VBN -> {'pated', 'patted'}
+  patrol/VBG -> {'patroling', 'patrolling'}
   pay/VBN -> {'paid', 'payed'}
-  peacemaker/NNS -> {'peacemaker', 'peacemakers'}
+  peacemaker/NNS -> {'peacemakers', 'peacemaker'}
   pen/VBN -> {'penned', 'pent'}
   penny/NNS -> {'pennies', 'pence'}
   people/NNS -> {'people', 'peoples'}
-  pertain/VBZ -> {'pertains', 'pertaines'}
+  pertain/VBZ -> {'pertaines', 'pertains'}
   pin/VBD -> {'pinned', 'pined'}
-  pin/VBG -> {'pinning', 'pining'}
-  pin/VBN -> {'pined', 'pinned'}
+  pin/VBG -> {'pining', 'pinning'}
+  pin/VBN -> {'pinned', 'pined'}
   pit/VBD -> {'pitted', 'pit'}
-  pity/VBD -> {'pity', 'pitied'}
-  play/VBZ -> {'playes', 'plays'}
+  pity/VBD -> {'pitied', 'pity'}
+  plan/VBG -> {'planing', 'planning'}
+  plan/VBN -> {'planed', 'planned'}
+  play/VBZ -> {'plays', 'playes'}
   plowman/NNS -> {'ploughmen', 'plowmen'}
   pluck/VBD -> {'pluck', 'plucked'}
   print/NNS -> {'prints', 'print'}
   proclaim/VBZ -> {'proclaimes', 'proclaims'}
-  prophesy/VBD -> {'prophesied', 'prophesy'}
-  prophesy/VBN -> {'prophesied', 'prophesy'}
-  prove/VBD -> {'proves', 'proved'}
+  prophesy/VBD -> {'prophesy', 'prophesied'}
+  prophesy/VBN -> {'prophesy', 'prophesied'}
+  prove/VBD -> {'proved', 'proves'}
   pry/VBD -> {'pryed', 'pry'}
   pursuit/NNS -> {'pursuit', 'pursuits'}
-  quicken/VBD -> {'quickened', 'quicken'}
+  quicken/VBD -> {'quicken', 'quickened'}
   quicken/VBN -> {'quickened', 'quicken'}
-  quit/VBD -> {'quitted', 'quit'}
-  quit/VBN -> {'quitted', 'quit'}
+  quit/VBD -> {'quit', 'quitted'}
+  quit/VBN -> {'quit', 'quitted'}
+  rag/VBD -> {'ragged', 'raged'}
+  rag/VBG -> {'raging', 'ragging'}
   rain/VBZ -> {'rains', 'raines'}
-  read/VBZ -> {'reades', 'reads'}
-  rear/VBZ -> {'rears', 'reares'}
-  rebel/VBD -> {'rebelled', 'rebel'}
-  rebuke/VBD -> {'rebuked', 'rebuke'}
-  rebuke/VBN -> {'rebuked', 'rebuke'}
-  recoil/NNS -> {'recoils', 'recoil'}
+  rat/VBD -> {'ratted', 'rated'}
+  read/VBZ -> {'reads', 'reades'}
+  rear/VBZ -> {'reares', 'rears'}
+  rebel/VBD -> {'rebel', 'rebelled'}
+  rebuke/VBD -> {'rebuke', 'rebuked'}
+  rebuke/VBN -> {'rebuke', 'rebuked'}
+  recoil/NNS -> {'recoil', 'recoils'}
   redound/VBD -> {'redound', 'redounded'}
-  reign/VBZ -> {'reignes', 'reigns'}
-  remain/VBZ -> {'remaines', 'remains'}
-  renew/VBD -> {'renewed', 'renew'}
+  reign/VBZ -> {'reigns', 'reignes'}
+  remain/VBZ -> {'remains', 'remaines'}
+  renew/VBD -> {'renew', 'renewed'}
   repay/VBN -> {'repaid', 'repayed'}
-  return/VBZ -> {'returnes', 'returns'}
-  ring/VBD -> {'rung', 'ringed', 'rang'}
-  ring/VBN -> {'rung', 'ringed', 'rang'}
+  return/VBZ -> {'returns', 'returnes'}
+  ring/VBD -> {'rung', 'rang', 'ringed'}
+  ring/VBN -> {'rung', 'rang', 'ringed'}
   rise/VBD -> {'rose', 'risen'}
-  round/NNS -> {'rounds', 'round'}
+  round/NNS -> {'round', 'rounds'}
   round/VBD -> {'round', 'rounded'}
-  round/VBZ -> {'rounds', 'round'}
+  round/VBZ -> {'round', 'rounds'}
   run/VBD -> {'ran', 'run'}
-  save/VBZ -> {'saved', 'saves'}
+  save/VBZ -> {'saves', 'saved'}
   saw/VBN -> {'sawed', 'sawn'}
   say/VBZ -> {'sayes', 'says'}
   scandal/NNS -> {'scandal', 'scandals'}
-  second/NNS -> {'second', 'seconds'}
-  see/VBD -> {'seen', 'saw'}
-  seek/VBZ -> {'seeks', 'seekes'}
+  second/NNS -> {'seconds', 'second'}
+  see/VBD -> {'saw', 'seen'}
+  seek/VBZ -> {'seekes', 'seeks'}
   seem/VBD -> {'seem', 'seemed'}
-  seem/VBZ -> {'seem', 'seems', 'seemes'}
-  seethe/VBD -> {'seethe', 'seethed'}
-  shake/VBD -> {'shook', 'shaken', 'shaked'}
-  shake/VBN -> {'shook', 'shaken'}
-  shave/VBN -> {'shaved', 'shaven'}
+  seem/VBZ -> {'seem', 'seemes', 'seems'}
+  seethe/VBD -> {'seethed', 'seethe'}
+  shake/VBD -> {'shaken', 'shook', 'shaked'}
+  shake/VBN -> {'shaken', 'shook'}
+  shave/VBN -> {'shaven', 'shaved'}
   shew/VBD -> {'shewed', 'shewn'}
-  shew/VBN -> {'shewn', 'shewed'}
-  shew/VBZ -> {'shewes', 'shews'}
+  shew/VBN -> {'shewed', 'shewn'}
+  shew/VBZ -> {'shews', 'shewes'}
   shipwreck/NNS -> {'shipwreck', 'shipwrecks'}
-  show/VBN -> {'shown', 'showed'}
-  show/VBZ -> {'showes', 'shows'}
-  shriek/NNS -> {'shrieks', 'shriek'}
-  shrink/VBD -> {'shrunk', 'shrank', 'shrinked'}
+  show/VBN -> {'showed', 'shown'}
+  show/VBZ -> {'shows', 'showes'}
+  shriek/NNS -> {'shriek', 'shrieks'}
+  shrink/VBD -> {'shrinked', 'shrank', 'shrunk'}
   shrink/VBN -> {'shrunken', 'shrunk'}
-  shrub/NNS -> {'shrub', 'shrubs'}
+  shrub/NNS -> {'shrubs', 'shrub'}
   sinew/NNS -> {'sinews', 'sinew'}
-  sing/VBD -> {'sang', 'sung'}
+  sing/VBD -> {'sung', 'singed', 'sang'}
+  sing/VBN -> {'sung', 'singed'}
   sink/VBD -> {'sank', 'sunk'}
-  sink/VBN -> {'sunken', 'sank', 'sunk'}
-  sink/VBZ -> {'sinkes', 'sinks'}
-  slacken/VBD -> {'slacken', 'slackened'}
-  slacken/VBN -> {'slacken', 'slackened'}
-  slay/VBD -> {'slain', 'slew'}
-  sleep/VBZ -> {'sleepes', 'sleeps'}
-  slide/VBD -> {'slidden', 'slid'}
-  slide/VBN -> {'slided', 'slid'}
-  slight/VBD -> {'slight', 'slighted'}
+  sink/VBN -> {'sank', 'sunken', 'sunk'}
+  sink/VBZ -> {'sinks', 'sinkes'}
+  slacken/VBD -> {'slackened', 'slacken'}
+  slacken/VBN -> {'slackened', 'slacken'}
+  slay/VBD -> {'slew', 'slain'}
+  sleep/VBZ -> {'sleeps', 'sleepes'}
+  slide/VBD -> {'slid', 'slidden'}
+  slide/VBN -> {'slid', 'slided'}
+  slight/VBD -> {'slighted', 'slight'}
   smell/VBD -> {'smelt', 'smelled'}
-  smite/VBD -> {'smote', 'smitten', 'smite'}
+  smite/VBD -> {'smite', 'smitten', 'smote'}
   smite/VBN -> {'smitten', 'smote'}
-  soprano/NNS -> {'soprani', 'sopranos'}
-  sow/VBN -> {'sowed', 'sown'}
-  spasm/NNS -> {'spasm', 'spasms'}
+  soprano/NNS -> {'sopranos', 'soprani'}
+  sow/VBN -> {'sown', 'sowed'}
+  spasm/NNS -> {'spasms', 'spasm'}
   speak/VBD -> {'spoke', 'spoken'}
   speak/VBN -> {'spoke', 'spoken'}
-  speak/VBZ -> {'speakes', 'spoken', 'speaks'}
+  speak/VBZ -> {'spoken', 'speaks', 'speakes'}
   spill/VBN -> {'spilt', 'spilled'}
-  spit/VBD -> {'spat', 'spit'}
+  spit/VBD -> {'spit', 'spat'}
   spoil/VBD -> {'spoilt', 'spoiled'}
   spoil/VBN -> {'spoilt', 'spoiled'}
-  spring/VBD -> {'sprung', 'sprang'}
-  stalk/VBZ -> {'stalkes', 'stalks'}
-  stave/VBN -> {'stove', 'staved'}
+  spring/VBD -> {'sprang', 'sprung'}
+  stalk/VBZ -> {'stalks', 'stalkes'}
+  star/VBZ -> {'stares', 'stars'}
+  stave/VBN -> {'staved', 'stove'}
   stay/VBZ -> {'stayes', 'stays'}
   steal/VBD -> {'stole', 'stolen'}
   steal/VBN -> {'stole', 'stolen'}
-  steal/VBZ -> {'steals', 'steales'}
-  stick/VBD -> {'stuck', 'stick'}
-  stick/VBZ -> {'stickes', 'sticks'}
+  steal/VBZ -> {'steales', 'steals'}
+  stick/VBD -> {'stick', 'stuck'}
+  stick/VBZ -> {'sticks', 'stickes'}
   string/VBN -> {'strung', 'stringed'}
   strip/VBZ -> {'stripes', 'strips'}
   strive/VBN -> {'strived', 'striven'}
   succour/VBD -> {'succoured', 'succour'}
-  sulky/NNS -> {'sulkies', 'sulky'}
+  sulky/NNS -> {'sulky', 'sulkies'}
   sway/NNS -> {'sways', 'swaies'}
-  swear/VBD -> {'sworn', 'swore'}
-  swear/VBZ -> {'sweares', 'swears'}
-  swell/VBN -> {'swelled', 'swollen'}
-  take/VBD -> {'taken', 'took'}
-  take/VBN -> {'taken', 'took'}
-  take/VBZ -> {'taken', 'takes'}
+  swear/VBD -> {'swore', 'sworn'}
+  swear/VBZ -> {'swears', 'sweares'}
+  swell/VBN -> {'swollen', 'swelled'}
+  take/VBD -> {'took', 'taken'}
+  take/VBN -> {'took', 'taken'}
+  take/VBZ -> {'takes', 'taken'}
   tale/NNS -> {'tales', 'tale'}
-  talk/VBZ -> {'talkes', 'talks'}
+  talk/VBZ -> {'talks', 'talkes'}
   tear/VBD -> {'torn', 'tore'}
-  tell/VBD -> {'telled', 'told'}
+  tell/VBD -> {'told', 'telled'}
   thicken/VBN -> {'thickened', 'thicken'}
-  think/VBZ -> {'thinks', 'thinkes'}
+  think/VBZ -> {'thinkes', 'thinks'}
   thirst/VBD -> {'thirsted', 'thirst'}
-  throw/VBD -> {'thrown', 'threw'}
+  throw/VBD -> {'threw', 'thrown'}
   toil/NNS -> {'toil', 'toils'}
-  travel/VBG -> {'travelling', 'traveling'}
+  travel/VBG -> {'traveling', 'travelling'}
   tulip/NNS -> {'tulips', 'tulip'}
   turkey/NNS -> {'turkey', 'turkeys'}
-  turn/VBZ -> {'turnes', 'turns'}
-  umbrella/NNS -> {'umbrella', 'umbrellas'}
+  turn/VBZ -> {'turns', 'turnes'}
+  umbrella/NNS -> {'umbrellas', 'umbrella'}
   unbar/VBD -> {'unbared', 'unbarred'}
-  unscrew/VBD -> {'unscrewed', 'unscrew'}
-  upbraid/VBD -> {'upbraided', 'upbraid'}
+  unscrew/VBD -> {'unscrew', 'unscrewed'}
+  upbraid/VBD -> {'upbraid', 'upbraided'}
   vex/VBD -> {'vexed', 'vex'}
-  vigil/NNS -> {'vigils', 'vigil'}
-  viol/NNS -> {'viols', 'viol'}
+  vigil/NNS -> {'vigil', 'vigils'}
+  viol/NNS -> {'viol', 'viols'}
+  wade/VBD -> {'wade', 'waded'}
   wait/VBZ -> {'waites', 'waits'}
   wake/VBD -> {'woke', 'waked'}
-  wake/VBN -> {'woken', 'woke', 'waked'}
-  walk/VBZ -> {'walks', 'walkes'}
-  warm/VBZ -> {'warmes', 'warms'}
+  wake/VBN -> {'woke', 'waked', 'woken'}
+  walk/VBZ -> {'walkes', 'walks'}
+  warm/VBZ -> {'warms', 'warmes'}
   warp/VBD -> {'warp', 'warped'}
   wear/VBD -> {'worn', 'wore'}
-  wear/VBZ -> {'weares', 'wears'}
-  weep/VBZ -> {'weeps', 'weepes'}
-  weigh/VBZ -> {'weighes', 'weighs'}
+  wear/VBZ -> {'wears', 'weares'}
+  weep/VBZ -> {'weepes', 'weeps'}
+  weigh/VBZ -> {'weighs', 'weighes'}
   whale/NNS -> {'whales', 'whale'}
   whale/VBD -> {'whaled', 'whale'}
-  wilt/VBD -> {'wilted', 'wilt'}
+  wilt/VBD -> {'wilt', 'wilted'}
   wind/VBD -> {'wound', 'winded'}
   wind/VBN -> {'wound', 'winded'}
   wind/VBZ -> {'windes', 'winds'}
-  wipe/VBD -> {'wipe', 'wiped'}
-  withdraw/VBD -> {'withdrew', 'withdrawn'}
+  wipe/VBD -> {'wiped', 'wipe'}
+  withdraw/VBD -> {'withdrawn', 'withdrew'}
   withhold/VBD -> {'withhold', 'withheld'}
-  woman/NNS -> {'womans', 'women'}
-  word/NNS -> {'word', 'words'}
-  work/VBD -> {'worked', 'wrought'}
-  work/VBN -> {'worked', 'wrought'}
-  worthy/JJS -> {'worthyest', 'worthiest'}
-  wring/VBD -> {'wrung', 'wringed'}
+  woman/NNS -> {'women', 'womans'}
+  word/NNS -> {'words', 'word'}
+  work/VBD -> {'wrought', 'worked'}
+  work/VBN -> {'wrought', 'worked'}
+  worthy/JJS -> {'worthiest', 'worthyest'}
+  wring/VBD -> {'wringed', 'wrung'}
   write/VBD -> {'wrote', 'written'}
-  zigzag/NNS -> {'zigzags', 'zigzag'}
+  zigzag/NNS -> {'zigzag', 'zigzags'}
+

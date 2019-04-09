@@ -1,17 +1,16 @@
 #!/usr/bin/python3
 import sys
 sys.path.insert(0, '..')    # make '..' first in the lib search path
-from   pyinflect import getInflection, getAllInflections
+from   pyinflect import getInflections
 
 
 if __name__ == '__main__':
 
-    lemma    = 'be'
-    tag      = 'VBD'
-    pos_type = 'V'
+    print(getInflections('be'))
+    print(getInflections('be', tag='VBD'))
+    print()
 
-    forms = getAllInflections(lemma, pos_type)
-    print(forms)
-
-    infl = getInflection(lemma, tag, use_first_person=False)
-    print(infl)
+    print(getInflections('watch'))
+    print(getInflections('watch', pos_type='V'))
+    print(getInflections('watch', tag='VBD'))
+    print()

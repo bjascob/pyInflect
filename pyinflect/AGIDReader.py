@@ -42,7 +42,6 @@ class AGIDReader(object):
                     else:
                         f.write('%s\n' % string)
 
-
     # Remove proper nouns (anything thtat starts with an upper-case)
     def removeProperNouns(self):
         ''' Remove all words starting with an uppercase character '''
@@ -66,16 +65,16 @@ class AGIDReader(object):
 
     # Parse a single line of the data file and return its contents
     def _parse(self, line):
+        # Remove everything inside brackets
+        line = self._removeBracedText(line)
         # line format is "word pos: form_info"
         lparts = line.split(':')
         # extract the word and pos (V=verb, N=noun, A=adjective or adverb)
         wparts = lparts[0].split(' ')
         word = self._extractAlpha(wparts[0])
-        pos = self._extractAlpha(wparts[1])
-        # Braces arround text denotes an explanation and should be removed
-        form_info = lparts[1]
-        form_info = self._removeBracedText(form_info)
+        pos  = self._extractAlpha(wparts[1])
         # different forms are separated by |
+        form_info = lparts[1]
         forms = []
         for form in form_info.split('|'):
             # Sometimes multiple spellings of the same form exist.  If so they
