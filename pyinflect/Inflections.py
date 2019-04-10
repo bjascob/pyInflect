@@ -1,6 +1,9 @@
+import sys
+import logging
+from   copy import deepcopy
 # Make this usable outside of Spacy
 try:
-    from spacy.tokens import Token
+    import spacy
 except ImportError:
     pass
 
@@ -19,13 +22,18 @@ class Inflections(object):
         self.infl_data = self._loadInflections(infl_fn)
         if overrides_fn:
             self.overrides = self._loadOverrides(overrides_fn)
-        try:
-            Token.set_extension('inflect', method=self.spacyGetInfl)
-        except NameError:
-            pass
+        if 'spacy' in sys.modules:
+            min_version = 2.0
+            sversion = spacy.__version__.split('.')
+            sversion = int(sversion[0]) + 0.1*int(sversion[1])
+            if sversion >= min_version:
+                spacy.tokens.Token.set_extension('inflect', method=self.spacyGetInfl)
+            else:
+                logging.warning('Spacy extensions are disabled.  Spacy version is %s.  '
+                                'A minimum of %s is required', spacy.__version__, min_version)
 
     # Get all inflections in the DB
-    def getInflections(self, lemma, pos_type=None, tag=None):
+    def getAllInflections(self, lemma, pos_type=None):
         ''' Method for getting all inflections for a word.
 
         This is a standalone method that takes in a given lemma and returns
@@ -35,8 +43,6 @@ class Inflections(object):
             lemma (str): The lemma of the word to lookup
             pos_type (str): Optional.  Must be 'V', 'A' or 'N' (Verb, Adverb/Adjective, Noun)
                 Returned data is limited to this category if present.
-            tag (str): Optional.  Penn Treebank tag.  Returned data is limited to this category
-                if present.  This tag takes precedent over the pos_type if both are present.
 
         Returns:
             Method returns a dictionary of the treebank tags with a tuple of their associated forms.
@@ -44,27 +50,45 @@ class Inflections(object):
             An empty dictionary is returned if the lemma is not found in the database.
         '''
         # Get the forms for the lemma from the main database
-        forms = self.infl_data.get(lemma.lower(), {})
+        forms = deepcopy(self.infl_data.get(lemma.lower(), {}))
         # Apply any overrides
         overrides = self.overrides.get(lemma.lower(), {})
         forms.update(overrides)
         if not forms:
-            return forms
+            return {}
         # Capitalize all the inflected forms the same as the lemma
         caps_style = self._getCapsStyle(lemma)
         forms = self._applyCapsStyleToDict(forms, caps_style)
-        # If a treebank tag is present, this is the most restrictive so use it
-        if tag is not None:
-            forms = forms.get(tag.upper(), {})
-            if forms:
-                forms = {tag: forms}
-        # Alternately, if there's a pos_type (V, A or N) then return all those types
-        elif pos_type is not None:
+        # If there's a pos_type (V, A or N) then return all those types
+        if pos_type is not None:
             candidate_tags = self._posTypeToTags(pos_type)
             for key in list(forms.keys()):
                 if key not in candidate_tags:
                     del forms[key]
         return forms
+
+    # Get all inflections in the DB
+    def getInflection(self, lemma, tag):
+        ''' Method for getting a lemma's inflection for a specific Penn Treebank tag.
+
+        This is a standalone method that takes in a given lemma and returns
+        all the associated inflection.
+
+        Args:
+            lemma (str): The lemma of the word to lookup
+            tag (str):  Penn Treebank tag.  Returned data is limited to this category
+                if present.
+
+        Returns:
+            Method returns a tuple of the inflection(s).
+            The capitalization style of the returned forms will be the same as the lemma
+            None is returned if the lemma / tag is not found.
+        '''
+        # Get the forms for the lemma from the main database
+        forms = self.getAllInflections(lemma, None)
+        # Use the treebank tag to find the correct return value
+        form = forms.get(tag, None)
+        return form
 
     def spacyGetInfl(self, token, tag, form_num=0):
         ''' Spacy extension method "inflect"
@@ -89,10 +113,9 @@ class Inflections(object):
         # Fix this so the capitalization is always preserved in the lemma
         caps_style = self._getCapsStyle(token.text)
         lemma = self._applyCapsStyle(token.lemma_, caps_style)
-        tag_form = self.getInflections(lemma, tag=tag)  # returns dict or {}
+        tag_form = self.getInflection(lemma, tag)
         if not tag_form:
             return None
-        tag_form = tag_form[tag]    # extract the value from the dict
         if form_num < len(tag_form):
             return tag_form[form_num]
         else:

@@ -42,29 +42,35 @@ class basicTest(unittest.TestCase):
         self.assertEqual(doc[4]._.inflect('VB'),  'eat')
 
     def testGetInfections01(self):
-        self.assertEqual(pyinflect.getInflections('awake', 'V'),
+        self.assertEqual(pyinflect.getAllInflections('awake', 'V'),
             # default value returned from AGID
             #{'VB': ('awake',), 'VBP': ('awake',), 'VBD': ('awoke', 'awaked'),
             # 'VBN': ('awoken', 'awaked', 'awoke'), 'VBG': ('awaking',), 'VBZ': ('awakes',)})
             # Overrides modified return
             {'VB': ('awake',), 'VBP': ('awake',), 'VBD': ('awoke', 'awaked'),
              'VBN': ('awaked',), 'VBG': ('awaking',), 'VBZ': ('awakes',)})
-        self.assertEqual(pyinflect.getInflections('awoke', 'V'), {})
-        self.assertRaises(ValueError, pyinflect.getInflections, 'awake', 'VB')
+        self.assertEqual(pyinflect.getAllInflections('awoke', 'V'), {})
+        self.assertRaises(ValueError, pyinflect.getAllInflections, 'awake', 'VB')   # pos_type doesn't have VB
 
     def testGetInflection02(self):
-        self.assertEqual(pyinflect.getInflections('squirrel', tag='NN'),  {'NN': ('squirrel',)})
-        self.assertEqual(pyinflect.getInflections('squirrel', tag='NNS'), {'NNS': ('squirrels', 'squirrel')})
+        self.assertEqual(pyinflect.getInflection('squirrel', 'NN'),  ('squirrel',))
+        self.assertEqual(pyinflect.getInflection('squirrel', 'NNS'), ('squirrels', 'squirrel'))
 
     def testGetInflection03(self):
-        self.assertEqual(pyinflect.getInflections('watch'),
+        self.assertEqual(pyinflect.getAllInflections('watch'),
             {'NN': ('watch',), 'NNS': ('watches',), 'VB': ('watch',), 'VBP': ('watch',), 'VBD': ('watched',),
              'VBN': ('watched',), 'VBG': ('watching',), 'VBZ': ('watches',)})
-        self.assertEqual(pyinflect.getInflections('watch', pos_type='V'),
+        self.assertEqual(pyinflect.getAllInflections('watch', 'V'),
             {'VB': ('watch',), 'VBP': ('watch',), 'VBD': ('watched',), 'VBN': ('watched',),
              'VBG': ('watching',), 'VBZ': ('watches',)})
-        self.assertEqual(pyinflect.getInflections('watch', tag='VBD'), {'VBD': ('watched',)})
-        self.assertEqual(pyinflect.getInflections('watch', pos_type='A'), {})
+        self.assertEqual(pyinflect.getInflection('watch', 'VBD'), ('watched',))
+        self.assertEqual(pyinflect.getAllInflections('watch', 'A'), {})
+
+    # Verifies that data is not getting deleted from the main repo when filtering for a specific tag
+    def testGetInflection04(self):
+        self.assertEqual(pyinflect.getAllInflections('watch', 'A'), {})
+        self.assertEqual(pyinflect.getInflection('watch', 'JJ'), None)
+        self.assertEqual(pyinflect.getInflection('watch', 'VBD'), ('watched',))
 
     def testCapitalization01(self):
         doc = self.nlp('BRAd Is STANDING.')
