@@ -1,0 +1,6 @@
+*.pyc
+__pycache__
+*.swp
+build/
+dist/
+pyinflect.egg-info/
