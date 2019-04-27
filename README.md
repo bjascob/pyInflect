@@ -40,13 +40,20 @@ To use standalone, import the method `getAllInflections` and/or `getInflection` 
 ```
 
 ## Issues:
-If you find a bug, please report it on the **[GitHub issues list](https://github.com/bjascob/pyInflect/issues)**.  However, there are some inflections which are ambiguous because of different spellings or because multiple forms exist for the same lemma / treebank tag.  For these instances extra logic will need to be supplied by the user to determine which one to use.  Alternately the `overrides.csv` can be used to specify the preferred string the system returns.
+If you find a bug, please report it on the **[GitHub issues list](https://github.com/bjascob/pyInflect/issues)**.  However be aware that when in comes to returning the correct inflection there are a number of different types of issues that can arise.  Some of these are not  readily fixable.  Issues with inflected forms include...
+* Multiple accepted spellings for an inflection (ie.. arcseconds vs arcsecondes)
+* Mass form and plural types (ie.. people vs peoples)
+* Forms that depend on context (ie.. further vs farther)
+* Infections that are non fully specified by the tag (ie.. be/VBD can be "was" or "were")
+* Incorrect lemmatization from spaCy (ie.. hating -> hat')
+* Incorrect tagging (ie.. VBN vs VBD)
+* Errors in the AGID database
 
-See `KnownIssues.txt` for a list of lemma / inflections that may be problematic.
+In order to assure that pyInflect returns the most commonly used inflected form/spelling for a given tag, a corpus technique used.  `In scripts/12_CreateOverridesList.py`, words are lemmatized and tagged with spaCy then re-inflected with pyInflect.  When the corpus result differs from pyInflect, the most commonly seen form is written to the `overrides.csv` file.  This technique can also help overcome lemmatization and tagging issues from spaCy and errors in the AGID database.  The file `CorpMultiInfls.txt` is a list of inflections/tags that came from multiple words in the corpus and thus may be problematic.
 
-One common issues is that forms of the verb "be" are not completely specified by the treekbank tag.  When the inflected form is ambiguous the first person form is returned.  Setting the `form_num` to the Spacy inflection method allows returning the 2nd person version.
+One common issue is that some forms of the verb "be" are not completely specified by the treekbank tag.  For instance be/VBD inflects to either "was" or "were" and be/VBP inflects to either "am", or "are". When the inflected form is ambiguous the first form is returned by default.  Setting the `form_num` to the Spacy inflection method allows returning other forms.
 
-The AGID data is created by a 3rd party and not maintained here.  Some lemmas are not in that data file, `infl.csv`, and thus can not be inflected.  In some cases the AGID may not contain the best inflection of the word.  For instance, lemma "people" with tag "NNS" will return "peoples" where you may want the word "people" which is also plural.
+Note that the AGID data is created by a 3rd party and not maintained here.  Some lemmas are not in that data file, `infl.csv`, and thus can not be inflected.  In some cases the AGID may not contain the best inflection of the word.  For instance, lemma "people" with tag "NNS" will return "peoples" (pre overrides) where you may want the word "people" which is also plural.
 
 
 ## Tags:
