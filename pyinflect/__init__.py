@@ -1,7 +1,7 @@
 import os
 from .Inflections import Inflections
 
-__version__ = '0.4.0'
+__version__ = '0.4.1'
 
 INFL_FN = os.path.join(os.path.dirname(__file__), 'infl.csv')
 OVERRIDES_FN = os.path.join(os.path.dirname(__file__), 'overrides.csv')
