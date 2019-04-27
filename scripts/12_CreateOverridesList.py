@@ -30,7 +30,7 @@ if __name__ == '__main__':
     corp_fns  = nltk.corpus.gutenberg.fileids()     # 18 files with 94K sentences
     max_chars = int(1e9)
     req_count = 2       # require at least the many instances in corpus for an override
-    multiples_fn = './multiple_entries.txt'
+    multiples_fn = '../CorpMultiInfls.txt.txt'
 
     # Load Spacy
     print('Loading Spacy model')
