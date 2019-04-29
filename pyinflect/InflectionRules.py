@@ -8,7 +8,7 @@ import re
 def useDoublingMethod(base):
     ''' Make a guess if a word follows the "doubled" inflection rules
 
-    This method is not fool-proof.  Some words that fit this pattern may follow regular inflection
+    This method is experimental.  Some words that fit this pattern may follow regular inflection
     morphology (ie.. clear->clearer)
 
     From http://learnersdictionary.com/qa/Doubling-the-final-consonant-before-adding-ed-or-ing
@@ -34,7 +34,7 @@ def useDoublingMethod(base):
 def useGrecoMethod(base):
     ''' Make a guess if this is a Greco-Latin style noun by looking at the ending.
 
-    This method is not full-proof.  Some words with these endings may use regular inflection
+    This method is experimental.  Some words with these endings may use regular inflection
     morpohology (ie.. box->boxes (regular) vs matrix->matrices (greco))
 
     Args: base (str): the lemma to test
