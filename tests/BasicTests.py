@@ -5,10 +5,12 @@ import unittest
 import spacy
 import pyinflect
 
+def x():
+    return None
 
-class basicTest(unittest.TestCase):
+class BasicTests(unittest.TestCase):
     def __init__(self, *args, **kwargs):
-        super(basicTest, self).__init__(*args, **kwargs)
+        super(BasicTests, self).__init__(*args, **kwargs)
         self.nlp = spacy.load('en_core_web_sm')
 
     def testSpacyInflect01(self):

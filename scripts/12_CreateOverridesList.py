@@ -20,9 +20,9 @@ import pyinflect
 # The created file is a mapping from lemma/tag to the "best" inflection.  Note that
 # this only overrides methods where the treebank tag is used, not ones where the
 # simplified AGID tag (V, N or A) is used.
-# Note that if the AGID version is changed this script should be re-run.
-# Also note that if Spacy changes their lemmatizer or if a different lemmatizer is used
-# these overrides may no longer be valid.
+# Note that if the AGID version is changed this script should be re-run.  Additionally
+# if Spacy changes their lemmatizer or if a different lemmatizer is used consider re-running
+# this script.
 if __name__ == '__main__':
 
     # Configuration
@@ -35,6 +35,7 @@ if __name__ == '__main__':
     # Load Spacy
     print('Loading Spacy model')
     nlp = spacy.load('en_core_web_sm')
+    print('Using spaCy version ', spacy.__version__)
 
      # Load the corpus to test with
     print('Loading corpus')
