@@ -41,7 +41,7 @@ def useGrecoMethod(base):
     '''
     if len(base)>3 and base[-3:] in ['sis', 'men']:
         return True
-    if len(base)>2 and base[-2:] in ['us', 'ma', 'a', 'um', 'on', 'is', 'ex']
+    if len(base)>2 and base[-2:] in ['us', 'ma', 'a', 'um', 'on', 'is', 'ex']:
         return True
     if len(base)>1 and base[-1] == 'x':
         return True

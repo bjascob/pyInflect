@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-import os
 import sys
+import os
 import time
 from   fnmatch import fnmatch
 from   importlib.util import spec_from_file_location
@@ -10,7 +10,7 @@ import unittest
 
 
 # Get all python files below the base directory
-def getAllPythonFiles(base_dir='tests'):
+def getAllPythonFiles(base_dir):
     test_fns = []
     for root, subdirs, files in os.walk(base_dir):
         for fn in files:
@@ -49,7 +49,8 @@ def getTestClass(fn):
 
 # Note: to capture output, run: `./runAllUnitTests.py | tee test.log`
 if __name__ == '__main__':
-    test_fns = getAllPythonFiles('tests')
+    test_fns = getAllPythonFiles('..' + os.sep + 'tests')
+    assert test_fns, 'Error: no test files found'
 
     # Loop through all file names
     st = time.time()
