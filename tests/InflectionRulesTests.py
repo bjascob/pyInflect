@@ -68,6 +68,16 @@ class InflectionRulesTests(unittest.TestCase):
             msg = '\n%s\nCorrect : %s\nFunction: %s' %  (word.lemma, word.inflections, infl_dict)
             self.assertTrue( word.inflectionsInDict(infl_dict), msg)
 
+    def testDoubledVerbs(self):
+        test_cases = []
+        test_cases.append( InflTestHelper('V', 'ban', ('bans', 'banned','banning')) )
+        test_cases.append( InflTestHelper('V', 'cancel', ('cancels', 'cancelled','cancelling')) )
+        test_cases.append( InflTestHelper('V', 'clog', ('clogs', 'clogged','clogging')) )
+        for word in test_cases:
+            infl_dict = pyinflect.getAllInflectionsOOV(word.lemma, word.pos_type)
+            msg = '\n%s\nCorrect : %s\nFunction: %s' %  (word.lemma, word.inflections, infl_dict)
+            self.assertTrue( word.inflectionsInDict(infl_dict, form_num=1), msg)
+
     def testRegularAdjs(self):
         test_cases = []
         test_cases.append( InflTestHelper('A', 'brainy', ('brainier', 'brainiest')) )
@@ -78,6 +88,16 @@ class InflectionRulesTests(unittest.TestCase):
             infl_dict = pyinflect.getAllInflectionsOOV(word.lemma, word.pos_type)
             msg = '\n%s\nCorrect : %s\nFunction: %s' %  (word.lemma, word.inflections, infl_dict)
             self.assertTrue( word.inflectionsInDict(infl_dict), msg)
+
+    def testDoubledAdjs(self):
+        test_cases = []
+        test_cases.append( InflTestHelper('A', 'dim', ('dimmer', 'dimmest')) )
+        test_cases.append( InflTestHelper('A', 'fit', ('fitter', 'fittest')) )
+        test_cases.append( InflTestHelper('A', 'sad', ('sadder', 'saddest')) )
+        for word in test_cases:
+            infl_dict = pyinflect.getAllInflectionsOOV(word.lemma, word.pos_type)
+            msg = '\n%s\nCorrect : %s\nFunction: %s' %  (word.lemma, word.inflections, infl_dict)
+            self.assertTrue( word.inflectionsInDict(infl_dict, form_num=1), msg)
 
     def testRegularNouns(self):
         test_cases = []

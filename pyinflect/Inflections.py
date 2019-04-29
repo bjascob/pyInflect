@@ -97,7 +97,7 @@ class Inflections(object):
         if pos_type == 'V':
             rv = InflectionRules.buildRegVerb(lemma)
             dv = InflectionRules.buildDoubledVerb(lemma)
-            forms = {'VBZ':(rv[0], dv[1]), 'VBN':(rv[1], dv[1]), 'VBD':(rv[1],dv[1]), \
+            forms = {'VBZ':(rv[0], dv[0]), 'VBN':(rv[1], dv[1]), 'VBD':(rv[1],dv[1]), \
                      'VBG':(rv[2],dv[2])}
         elif pos_type == 'A':
             ra = InflectionRules.buildRegAdjAdv(lemma)
