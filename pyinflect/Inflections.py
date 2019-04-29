@@ -52,7 +52,7 @@ class Inflections(object):
         # Get the forms for the lemma from the main database
         forms = deepcopy(self.infl_data.get(lemma.lower(), {}))
         # Apply any overrides
-        overrides = self.overrides.get(lemma.lower(), {})
+        overrides = deepcopy(self.overrides.get(lemma.lower(), {}))
         forms.update(overrides)
         if not forms:
             return {}
