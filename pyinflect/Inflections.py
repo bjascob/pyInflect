@@ -80,10 +80,10 @@ class Inflections(object):
             pos_type (str): Must be 'V', 'A' or 'N' (Verb, Adverb/Adjective, Noun)
 
         Returns:
-            Method returns a dictionary of the treebank tags with a tuple of their associated forms.
+            Method returns a dictionary of the treebank tags with a tuple of their forms.
             For verbs, adjectives and adverbs, the first form is the "regular" form and the second
             is the doubled form.
-            For nouns, the first form is the "regular" form and the second is the "greco-latin" form.
+            For nouns, the first form is the "regular" form and the second is the "greco-latin".
 
             This function may return the inflections under multiple tags.  The goals is to return
             under all possible valid tags so whichever key the user puts into the dictionary will
@@ -102,7 +102,8 @@ class Inflections(object):
         elif pos_type == 'A':
             ra = InflectionRules.buildRegAdjAdv(lemma)
             da = InflectionRules.buildDoubledAdjAdv(lemma)
-            forms = {'JJR':(ra[0], da[0]), 'RBR':(ra[0],da[0]), 'JJS':(ra[1],da[1]), 'RBS':(ra[1],da[1])}
+            forms = {'JJR':(ra[0],da[0]), 'RBR':(ra[0],da[0]), \
+                     'JJS':(ra[1],da[1]), 'RBS':(ra[1],da[1])}
         elif pos_type == 'N':
             rn = InflectionRules.buildRegNoun(lemma)
             gn = InflectionRules.buildGrecNoun(lemma)
@@ -245,7 +246,7 @@ class Inflections(object):
     def _applyCapsStyleToDict(cls, data, style):
         for key, words in data.items():
             # Check of the values in the dictionary are single string or tuple/list of them
-            if isinstance(words, tuple) or isinstance(words, list):
+            if isinstance(words, (list, tuple)):
                 new_words = [cls._applyCapsStyle(w, style) for w in words]
                 data[key] = tuple(new_words)
             else:
