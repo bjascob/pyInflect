@@ -24,9 +24,9 @@ class InflTestHelper(object):
         else:
             assert False, 'Invalid pos_type = %s' % pos_type
 
-    def inflectionsInDict(self, form_dict):
+    def inflectionsInDict(self, form_dict, form_num=0):
         for tag, infl in self.inflections.items():
-            if not infl == form_dict.get(tag, None):
+            if not infl == form_dict.get(tag, None)[form_num]:
                 return False
         return True
 
@@ -38,6 +38,16 @@ class InflectionRulesTests(unittest.TestCase):
 
     def testPosTypeException(self):
         self.assertRaises(ValueError, pyinflect.getAllInflectionsOOV, 'test', 'X')
+
+    def testCapitalization(self):
+        test_cases = []
+        test_cases.append( InflTestHelper('V', 'DISmiss', ('Dismisses', 'Dismissed','Dismissing')) )
+        test_cases.append( InflTestHelper('A', 'Brainy', ('Brainier', 'Brainiest')) )
+        test_cases.append( InflTestHelper('N', 'FLY', ('FLIES',)) )
+        for word in test_cases:
+            infl_dict = pyinflect.getAllInflectionsOOV(word.lemma, word.pos_type)
+            msg = '\n%s\nCorrect : %s\nFunction: %s' %  (word.lemma, word.inflections, infl_dict)
+            self.assertTrue( word.inflectionsInDict(infl_dict), msg)
 
     def testRegularVerbs(self):
         test_cases = []
@@ -96,9 +106,9 @@ class InflectionRulesTests(unittest.TestCase):
         test_cases.append( InflTestHelper('N', 'index', ('indices',)) )
         test_cases.append( InflTestHelper('N', 'matrix', ('matrices',)) )
         for word in test_cases:
-            infl_dict = pyinflect.getAllInflectionsOOV(word.lemma, word.pos_type, use_greco=True)
+            infl_dict = pyinflect.getAllInflectionsOOV(word.lemma, word.pos_type)
             msg = '\n%s\nCorrect : %s\nFunction: %s' %  (word.lemma, word.inflections, infl_dict)
-            self.assertTrue( word.inflectionsInDict(infl_dict), msg)
+            self.assertTrue( word.inflectionsInDict(infl_dict, form_num=1), msg)
 
 
 if __name__ == '__main__':

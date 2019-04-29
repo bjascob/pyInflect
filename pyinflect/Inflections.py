@@ -69,46 +69,44 @@ class Inflections(object):
         return forms
 
     # Get all inflections using the Inflection Rules
-    def getAllInflectionsOOV(self, lemma, pos_type, use_doubling=False, use_greco=False):
-        ''' Method for getting using Inflection rules to create a list of inflection for a word.
+    def getAllInflectionsOOV(self, lemma, pos_type):
+        ''' Method for using Inflection rules to create a list of inflections for a word.
 
-        This is a standalone method that takes in a given lemma and returns
-        all the associated inflections.
+        This is a standalone method that takes in a given lemma and returns all the associated
+        inflections.
 
         Args:
             lemma (str): The lemma of the word to lookup
             pos_type (str): Must be 'V', 'A' or 'N' (Verb, Adverb/Adjective, Noun)
-            use_doubling (bool): If True verbs, adjectives and adverbs will use doubling rules
-            use_greco (bool): If True nouns will use Greco-Latin rules.
 
         Returns:
-            Method returns a dictionary of the treebank tags to their associated forms.
-            This function may return the inflection under multiple tags.  The goals is to return
+            Method returns a dictionary of the treebank tags with a tuple of their associated forms.
+            For verbs, adjectives and adverbs, the first form is the "regular" form and the second
+            is the doubled form.
+            For nouns, the first form is the "regular" form and the second is the "greco-latin" form.
+
+            This function may return the inflections under multiple tags.  The goals is to return
             under all possible valid tags so whichever key the user puts into the dictionary will
-            give the inflection.
-                past/participle form of verns are tagged VBN and VBD
-                for pos_type = 'A' both JJ and RB tags are returned
+            give the proper inflection.
+                past/participle form of verbs are tagged VBN and VBD
+                for pos_type = 'A' both JJx and RBx tags are returned
+
             The capitalization style of the returned forms will be the same as the lemma.
         '''
         caps_style = self._getCapsStyle(lemma)
         if pos_type == 'V':
-            if not use_doubling:
-                forms = InflectionRules.buildRegVerb(lemma)
-            else:
-                forms = InflectionRules.buildDoubledVerb(lemma)
-            forms = {'VBZ':forms[0], 'VBN':forms[1], 'VBD':forms[1], 'VBG':forms[2]}
+            rv = InflectionRules.buildRegVerb(lemma)
+            dv = InflectionRules.buildDoubledVerb(lemma)
+            forms = {'VBZ':(rv[0], dv[1]), 'VBN':(rv[1], dv[1]), 'VBD':(rv[1],dv[1]), \
+                     'VBG':(rv[2],dv[2])}
         elif pos_type == 'A':
-            if not use_doubling:
-                forms = InflectionRules.buildRegAdjAdv(lemma)
-            else:
-                forms = InflectionRules.buildDoubledAdjAdv(lemma)
-            forms = {'JJR':forms[0], 'RBR':forms[0], 'JJS':forms[1], 'RBS':forms[1]}
+            ra = InflectionRules.buildRegAdjAdv(lemma)
+            da = InflectionRules.buildDoubledAdjAdv(lemma)
+            forms = {'JJR':(ra[0], da[0]), 'RBR':(ra[0],da[0]), 'JJS':(ra[1],da[1]), 'RBS':(ra[1],da[1])}
         elif pos_type == 'N':
-            if not use_greco:
-                forms = InflectionRules.buildRegNoun(lemma)
-            else:
-                forms = InflectionRules.buildGrecNoun(lemma)
-            forms = {'NNS':forms[0]}
+            rn = InflectionRules.buildRegNoun(lemma)
+            gn = InflectionRules.buildGrecNoun(lemma)
+            forms = {'NNS':(rn[0],gn[0])}
         else:
             raise ValueError('Unrecognized pos_type = %s' % pos_type)
         forms = self._applyCapsStyleToDict(forms, caps_style)

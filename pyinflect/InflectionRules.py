@@ -25,6 +25,7 @@ def useDoublingMethod(base):
     Returns: True or False
     '''
     # exceptions: clear = clearer
+    base = base.lower()
     if len(base)>2 and base[-1] not in 'aeiouwxy' and base[-2] in 'aeiou':
         return True
     return False
@@ -43,6 +44,7 @@ def useGrecoMethod(base):
     # exceptions:
     #   box = boxes (regular), matrix = matrices (greco)
     #   axis = axes is common but SPECIALIST list words ending in "is" as irregular.
+    base = base.lower()
     if len(base)>3 and base[-3:] in ['sis', 'men']:
         return True
     if len(base)>2 and base[-2:] in ['us', 'ma', 'um', 'on', 'is', 'ex']:
@@ -61,6 +63,7 @@ def buildRegVerb(base):
 
     Returns: list [3rd_singular, past/past_participle, present_participle]
     '''
+    base = base.lower()
     if re.search(r'(?:[szx]|ch|sh)$', base):
         return (base+'es', base+'ed', base+'ing')
     elif re.search(r'ie$', base):
@@ -85,6 +88,7 @@ def buildDoubledVerb(base):
 
     Returns: list [3rd_singular, past/past_participle, present_participle]
     '''
+    base = base.lower()
     third = buildRegVerb(base)[0]
     past = base + base[-1] + 'ed'
     pres = base + base[-1] + 'ing'
@@ -101,6 +105,7 @@ def buildRegAdjAdv(base):
 
     Returns: list [comparative, superlative]
     '''
+    base = base.lower()
     if re.search(r'(?:[^aeiou])y$', base):
         b = base[:-1]
         return (b+'ier', b+'iest')
@@ -122,6 +127,7 @@ def buildDoubledAdjAdv(base):
 
     Returns: list [comparative, superlative]
     '''
+    base = base.lower()
     b = base + base[-1]
     return (b+'er', b+'est')
 
@@ -135,6 +141,7 @@ def buildRegNoun(base):
 
     Returns: list [plural]
     '''
+    base = base.lower()
     if re.search(r'(?:[^aeiou])y$', base):
         return (base[:-1]+'ies',)
     elif re.search(r'(?:[szx]|ch|sh)$', base):
@@ -152,6 +159,7 @@ def buildGrecNoun(base):
 
     Returns: list [plural]
     '''
+    base = base.lower()
     if re.search(r'us$', base):
         return (base[:-2] + 'i',)
     elif re.search(r'ma$', base):
@@ -172,3 +180,5 @@ def buildGrecNoun(base):
         return (base[:-2] + 'ices',)
     elif re.search(r'x$', base):
         return (base[:-1] + 'ces',)
+    else:
+        return ('',)
