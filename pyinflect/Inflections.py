@@ -6,6 +6,7 @@ try:
     import spacy
 except ImportError:
     pass
+from . import InflectionRules
 
 
 class Inflections(object):
@@ -65,6 +66,52 @@ class Inflections(object):
             for key in list(forms.keys()):
                 if key not in candidate_tags:
                     del forms[key]
+        return forms
+
+    # Get all inflections using the Inflection Rules
+    def getAllInflectionsOOV(self, lemma, pos_type, use_doubling=False, use_greco=False):
+        ''' Method for getting using Inflection rules to create a list of inflection for a word.
+
+        This is a standalone method that takes in a given lemma and returns
+        all the associated inflections.
+
+        Args:
+            lemma (str): The lemma of the word to lookup
+            pos_type (str): Must be 'V', 'A' or 'N' (Verb, Adverb/Adjective, Noun)
+            use_doubling (bool): If True verbs, adjectives and adverbs will use doubling rules
+            use_greco (bool): If True nouns will use Greco-Latin rules.
+
+        Returns:
+            Method returns a dictionary of the treebank tags to their associated forms.
+            This function may return the inflection under multiple tags.  The goals is to return
+            under all possible valid tags so whichever key the user puts into the dictionary will
+            give the inflection.
+                past/participle form of verns are tagged VBN and VBD
+                for pos_type = 'A' both JJ and RB tags are returned
+            The capitalization style of the returned forms will be the same as the lemma.
+        '''
+        caps_style = self._getCapsStyle(lemma)
+        if pos_type == 'V':
+            if not use_doubling:
+                forms = InflectionRules.buildRegVerb(lemma)
+            else:
+                forms = InflectionRules.buildDoubledVerb(lemma)
+            forms = {'VBZ':forms[0], 'VBN':forms[1], 'VBD':forms[1], 'VBG':forms[2]}
+        elif pos_type == 'A':
+            if not use_doubling:
+                forms = InflectionRules.buildRegAdjAdv(lemma)
+            else:
+                forms = InflectionRules.buildDoubledAdjAdv(lemma)
+            forms = {'JJR':forms[0], 'RBR':forms[0], 'JJS':forms[1], 'RBS':forms[1]}
+        elif pos_type == 'N':
+            if not use_greco:
+                forms = InflectionRules.buildRegNoun(lemma)
+            else:
+                forms = InflectionRules.buildGrecNoun(lemma)
+            forms = {'NNS':forms[0]}
+        else:
+            raise ValueError('Unrecognized pos_type = %s' % pos_type)
+        forms = self._applyCapsStyleToDict(forms, caps_style)
         return forms
 
     # Get all inflections in the DB
@@ -199,8 +246,12 @@ class Inflections(object):
     @classmethod
     def _applyCapsStyleToDict(cls, data, style):
         for key, words in data.items():
-            new_words = [cls._applyCapsStyle(w, style) for w in words]
-            data[key] = tuple(new_words)
+            # Check of the values in the dictionary are single string or tuple/list of them
+            if isinstance(words, tuple) or isinstance(words, list):
+                new_words = [cls._applyCapsStyle(w, style) for w in words]
+                data[key] = tuple(new_words)
+            else:
+                data[key] = cls._applyCapsStyle(words, style)
         return data
 
     # Add entries to "data" for the lemma.

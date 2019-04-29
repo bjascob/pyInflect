@@ -5,8 +5,6 @@ import unittest
 import spacy
 import pyinflect
 
-def x():
-    return None
 
 class BasicTests(unittest.TestCase):
     def __init__(self, *args, **kwargs):

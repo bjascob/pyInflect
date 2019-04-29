@@ -16,5 +16,8 @@ def InflectionEngine():
 def getAllInflections(lemma, pos_type=None):
     return INFLECTION_INST.getAllInflections(lemma, pos_type)
 
+def getAllInflectionsOOV(lemma, pos_type, use_doubling=False, use_greco=False):
+    return INFLECTION_INST.getAllInflectionsOOV(lemma, pos_type, use_doubling, use_greco)
+
 def getInflection(lemma, tag):
     return INFLECTION_INST.getInflection(lemma, tag)
