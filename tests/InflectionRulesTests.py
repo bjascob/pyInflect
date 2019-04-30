@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-#!/usr/bin/python3
 import sys
 sys.path.insert(0, '..')    # make '..' first in the lib search path
 import unittest

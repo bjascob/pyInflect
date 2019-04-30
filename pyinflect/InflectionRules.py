@@ -12,11 +12,11 @@ def useDoublingMethod(base):
     morphology (ie.. clear->clearer)
 
     From http://learnersdictionary.com/qa/Doubling-the-final-consonant-before-adding-ed-or-ing
-        * In a word with 1 syllable, double the final consonant ONLY if the word ends
-          in 1 vowel + 1 consonant.
-        * In a word with 2 or more syllables, double the final consonant ONLY if the word ends
-          in 1 vowel + 1 consonant AND the final syllable is stressed.
-        * At the end of a word, don’t count w, x, or y as a consonant.
+    * In a word with 1 syllable, double the final consonant ONLY if the word ends
+    in 1 vowel + 1 consonant.
+    * In a word with 2 or more syllables, double the final consonant ONLY if the word ends
+    in 1 vowel + 1 consonant AND the final syllable is stressed.
+    * At the end of a word, don’t count w, x, or y as a consonant.
     Determining the number of syllables and if the last is "stressed" is difficult programatically
     so ignore those rules here and hope for the best.
 

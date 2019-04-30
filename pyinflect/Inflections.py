@@ -24,10 +24,10 @@ class Inflections(object):
         if overrides_fn:
             self.overrides = self._loadOverrides(overrides_fn)
         if 'spacy' in sys.modules:
-            min_version = 2.0
-            sversion = spacy.__version__.split('.')
-            sversion = int(sversion[0]) + 0.1*int(sversion[1])
-            if sversion >= min_version:
+            min_version = '2.0'
+            mv = min_version.split('.')
+            sv = spacy.__version__.split('.')
+            if sv[0] > mv[0] or (sv[0] == mv[0] and sv[1] >= mv[1]):
                 spacy.tokens.Token.set_extension('inflect', method=self.spacyGetInfl)
             else:
                 logging.warning('Spacy extensions are disabled.  Spacy version is %s.  '
@@ -82,14 +82,13 @@ class Inflections(object):
         Returns:
             Method returns a dictionary of the treebank tags with a tuple of their forms.
             For verbs, adjectives and adverbs, the first form is the "regular" form and the second
-            is the doubled form.
-            For nouns, the first form is the "regular" form and the second is the "greco-latin".
+            is the doubled form.  For nouns, the first form is the "regular" form and the second
+            is the "greco-latin".
 
-            This function may return the inflections under multiple tags.  The goals is to return
+            This method may return the inflections under multiple tags.  The goals is to return
             under all possible valid tags so whichever key the user puts into the dictionary will
-            give the proper inflection.
-                past/participle form of verbs are tagged VBN and VBD
-                for pos_type = 'A' both JJx and RBx tags are returned
+            give the proper inflection. (past/participle form of verbs are tagged VBN and VBD and
+            for pos_type = 'A' both JJx and RBx tags are returned).
 
             The capitalization style of the returned forms will be the same as the lemma.
         '''
@@ -123,9 +122,8 @@ class Inflections(object):
 
         Args:
             lemma (str): The lemma of the word to lookup
-            tag (str):  Penn Treebank tag.  Returned data is limited to this category
-                if present.
-            inflect_oov (bool): if False only inflections from the AGID lookup are returned.
+            tag (str):  Penn Treebank tag.  Returned data is limited to this tag.
+            inflect_oov (bool): If False only inflections from the AGID lookup are returned.
             If True, InflectionRules via getAllInflectionsOOV will be used to find inflections.
 
         Returns:
@@ -213,7 +211,7 @@ class Inflections(object):
         if pos_type in ['J', 'R']:
             pos_type = 'A'
         if tag == 'MD':
-            pos_type = 'V'            
+            pos_type = 'V'
         if pos_type not in ['V', 'A', 'N']:
             raise ValueError('Unrecognized pos_type =%s.  Must be V, A or N' % pos_type)
         return pos_type

@@ -3,4 +3,5 @@ __pycache__
 *.swp
 build/
 dist/
+docs/build
 pyinflect.egg-info/
