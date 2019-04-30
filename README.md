@@ -9,25 +9,36 @@ pip3 install pyinflect
 ```
 
 ## Usage as an Extension to Spacy
-To use with Spacy, you need Spacy version 2.0 or later.  Versions 1.9 and early do not support the extension methods used here.<br/>
+To use with Spacy, you need Spacy version 2.0 or later.  Versions 1.9 and earlier do not support the extension methods used here.
 
-To use as an extension to Spacy, first import the module.  This will create a new `inflect` method for each Spacy `Token` that takes in a Penn Treebank tag as its parameter.  The method returns the inflected form of the token's lemma based on the supplied treekbank tag.  When more than one spelling/form exists for the given tag, an optional form number parameter can be supplied, otherwise the first one is returned.
-
+To use as an extension to Spacy, first import the module.  This will create a new `inflect` method for each Spacy `Token` that takes in a Penn Treebank tag as its parameter.  The method returns the inflected form of the token's lemma based on the supplied treekbank tag.
 ```
+> import spacy
 > import pyinflect
-> doc = nlp('This is an example.')
-> doc[3]._.inflect('NNS')
+> nlp = spacy.load('en_core_web_sm')
+> tokens = nlp('This is an example of xxtest.')
+> tokens[3]._.inflect('NNS')
 examples
-
-> doc[1]._.inflect('VBD', 0)
+```
+When more than one spelling/form exists for the given tag, an optional form number can be supplied, otherwise the first one is returned.
+```
+> tokens[1]._.inflect('VBD', form_num=0)
 was
-
-> doc[1]._.inflect('VBD', 1)
+> tokens[1]._.inflect('VBD', form_num=1)
 were
 ```
+When the lemma you wish to inflect is not in the lookup dictionary, the method returns `None`.  The optional parameter `inflect_oov` can be used to inflect the word using regular inflection rules.  In this case `form_num=0` selects the "regular" inflection and `form_num=1` selects the "doubled" version for verbs and adj/adv or the "Greco-Latin" for nouns.
+```
+> tokens[5]._.inflect('VBG', inflect_oov=True)
+xxtesting
+> tokens[5]._.inflect('VBG', inflect_oov=True, form_num=1)
+xxtestting
+```
+You will need to figure out yourself which form_num to use, however there are basic helper functions in `pyinflect.InflectionRules` which can make a guess if the lemma uses a "doubling" or "Greco-Latin" style rules.
+
 
 ## Usage Standalone
-To use standalone, import the method `getAllInflections` and/or `getInflection` and call them directly.  `getAllInflections` returns all entries in the infl.csv file as a dictionary of inflected forms, where each form entry is a tuple with one or more spellings/forms for a given treebank tag.  The optional parameter `pos_type` (which is V, A or N) can be used to limited the returned data to specific parts of speech.  The method `getInflection` takes a lemma and a Penn Treebank tag and returns a tuple of the specific inflection(s) associated with it.
+To use standalone, import the method `getAllInflections` and/or `getInflection` and call them directly.  `getAllInflections` returns all entries in the `infl.csv` file as a dictionary of inflected forms, where each form entry is a tuple with one or more spellings/forms for a given treebank tag.  The optional parameter `pos_type` (which is V, A or N) can be used to limited the returned data to specific parts of speech.  The method `getInflection` takes a lemma and a Penn Treebank tag and returns a tuple of the specific inflection(s) associated with it.
 ```
 > from pyinflect import getAllInflections, getInflection
 > getAllInflections('watch')
@@ -39,22 +50,27 @@ To use standalone, import the method `getAllInflections` and/or `getInflection` 
 > getInflection('watch', tag='VBD')
 ('watched',)
 ```
+The method `getInflection` takes the parameter `inflect_oov` and uses it similarly to what is described above with spaCy.
+```
+> getInflection('xxtest', 'VBG', inflect_oov=True)
+('xxtesting', 'xxtestting')
+```
 
 ## Issues:
 If you find a bug, please report it on the **[GitHub issues list](https://github.com/bjascob/pyInflect/issues)**.  However be aware that when in comes to returning the correct inflection there are a number of different types of issues that can arise.  Some of these are not  readily fixable.  Issues with inflected forms include...
-* Multiple accepted spellings for an inflection (ie.. arcseconds vs arcsecondes)
+* Multiple accepted spellings for an inflection (ie.. armamentariums vs. armamentaria)
 * Mass form and plural types (ie.. people vs peoples)
 * Forms that depend on context (ie.. further vs farther)
 * Infections that are not fully specified by the tag (ie.. be/VBD can be "was" or "were")
 * Incorrect lemmatization from spaCy (ie.. hating -> hat')
-* Incorrect tagging (ie.. VBN vs VBD)
+* Incorrect tagging (ie.. VBN vs. VBD)
 * Errors in the AGID database
 
-In order to assure that pyInflect returns the most commonly used inflected form/spelling for a given tag, a corpus technique is used.  `In scripts/12_CreateOverridesList.py`, words are lemmatized and tagged with spaCy then re-inflected with pyInflect.  When the original corpus word differs from pyInflect, the most commonly seen form is written to the `overrides.csv` file.  This technique can also help overcome lemmatization and tagging issues from spaCy and errors in the AGID database.  The file `CorpMultiInfls.txt` is a list of inflections/tags that came from multiple words in the corpus and thus may be problematic.
+In order to assure that pyInflect returns the most commonly used inflected form/spelling for a given tag, a corpus technique is used.  In `scripts/12_CreateOverridesList.py`, words are lemmatized and tagged with spaCy then re-inflected with pyInflect.  When the original corpus word differs from pyInflect, the most commonly seen form is written to the `overrides.csv` file.  This technique can also help overcome lemmatization and tagging issues from spaCy and errors in the AGID database.  The file `CorpMultiInfls.txt` is a list of inflections/tags that came from multiple words in the corpus and thus may be problematic.
 
-One common issue is that some forms of the verb "be" are not completely specified by the treekbank tag.  For instance be/VBD inflects to either "was" or "were" and be/VBP inflects to either "am", or "are". When the inflected form is ambiguous the first form is returned by default.  Setting the `form_num` in the Spacy inflection method allows returning other forms.
+One common issue is that some forms of the verb "be" are not completely specified by the treekbank tag.  For instance be/VBD inflects to either "was" or "were" and be/VBP inflects to either "am", or "are". When the inflected form is ambiguous the first form is returned by default.  Setting the `form_num` in the Spacy inflection method allows returning other form(s).
 
-Note that the AGID data is created by a 3rd party and not maintained here.  Some lemmas are not in that data file, `infl.csv`, and thus can not be inflected.  In some cases the AGID may not contain the best inflection of the word.  For instance, lemma "people" with tag "NNS" will return "peoples" (pre overrides) where you may want the word "people" which is also plural.
+Note that the AGID data is created by a 3rd party and not maintained here.  Some lemma are not in that data file, `infl.csv`, and thus can not be inflected using the dictionary methods.  In some cases the AGID may not contain the best inflection of the word.  For instance, lemma "people" with tag "NNS" will return "peoples" (pre-overrides) where you may want the word "people" which is also plural.
 
 
 ## Tags:

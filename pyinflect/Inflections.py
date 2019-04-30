@@ -212,6 +212,8 @@ class Inflections(object):
         pos_type = tag[0]
         if pos_type in ['J', 'R']:
             pos_type = 'A'
+        if tag == 'MD':
+            pos_type = 'V'            
         if pos_type not in ['V', 'A', 'N']:
             raise ValueError('Unrecognized pos_type =%s.  Must be V, A or N' % pos_type)
         return pos_type
