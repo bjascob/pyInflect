@@ -19,5 +19,5 @@ def getAllInflections(lemma, pos_type=None):
 def getAllInflectionsOOV(lemma, pos_type):
     return INFLECTION_INST.getAllInflectionsOOV(lemma, pos_type)
 
-def getInflection(lemma, tag):
-    return INFLECTION_INST.getInflection(lemma, tag)
+def getInflection(lemma, tag, inflect_oov=False):
+    return INFLECTION_INST.getInflection(lemma, tag, inflect_oov)

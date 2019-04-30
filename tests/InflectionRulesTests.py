@@ -3,6 +3,7 @@
 import sys
 sys.path.insert(0, '..')    # make '..' first in the lib search path
 import unittest
+import spacy
 import pyinflect
 
 
@@ -14,19 +15,22 @@ class InflTestHelper(object):
         # Put the forms into a dictionary for easy comparion
         if pos_type == 'V':
             assert len(forms) == 3
-            self.inflections = {'VBZ':forms[0], 'VBN':forms[1], 'VBG':forms[2]}
+            self.inflections = {'VB':lemma, 'VBZ':forms[0], 'VBN':forms[1], 'VBG':forms[2]}
         elif pos_type == 'A':
             assert len(forms) == 2
-            self.inflections = {'JJR':forms[0], 'JJS':forms[1]}
+            self.inflections = {'JJ':lemma, 'JJR':forms[0], 'JJS':forms[1]}
         elif pos_type == 'N':
             assert len(forms) == 1
-            self.inflections = {'NNS':forms[0]}
+            self.inflections = {'NN':lemma, 'NNS':forms[0]}
         else:
             assert False, 'Invalid pos_type = %s' % pos_type
 
     def inflectionsInDict(self, form_dict, form_num=0):
         for tag, infl in self.inflections.items():
-            if not infl == form_dict.get(tag, None)[form_num]:
+            forms = form_dict.get(tag, None)
+            # for the base forms there's only one form so always use form_num=0
+            fnum = 0 if tag in ['VB', 'JJ', 'RR', 'NN'] else form_num
+            if not infl == forms[fnum]:
                 return False
         return True
 
@@ -35,13 +39,15 @@ class InflTestHelper(object):
 class InflectionRulesTests(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super(InflectionRulesTests, self).__init__(*args, **kwargs)
+        self.nlp = spacy.load('en_core_web_sm')
 
     def testPosTypeException(self):
         self.assertRaises(ValueError, pyinflect.getAllInflectionsOOV, 'test', 'X')
 
     def testCapitalization(self):
         test_cases = []
-        test_cases.append( InflTestHelper('V', 'DISmiss', ('Dismisses', 'Dismissed','Dismissing')) )
+        test_cases.append( InflTestHelper('V', 'DISmiss', ('Dismisses', 'Dismissed','Dismissing')))
+        test_cases[-1].inflections['VB'] = 'Dismiss' # override InflTestHelper's so test is correct
         test_cases.append( InflTestHelper('A', 'Brainy', ('Brainier', 'Brainiest')) )
         test_cases.append( InflTestHelper('N', 'FLY', ('FLIES',)) )
         for word in test_cases:
@@ -129,6 +135,21 @@ class InflectionRulesTests(unittest.TestCase):
             infl_dict = pyinflect.getAllInflectionsOOV(word.lemma, word.pos_type)
             msg = '\n%s\nCorrect : %s\nFunction: %s' %  (word.lemma, word.inflections, infl_dict)
             self.assertTrue( word.inflectionsInDict(infl_dict, form_num=1), msg)
+
+    def testGetInflection(self):
+        self.assertEqual(pyinflect.getInflection('xxfocus', 'NN', inflect_oov=False), None)
+        self.assertEqual(pyinflect.getInflection('xxfocus', 'NN', inflect_oov=True), ('xxfocus',))
+        self.assertEqual(pyinflect.getInflection('xxfocus', 'NNS', inflect_oov=True),
+            ('xxfocuses', 'xxfoci'))
+        self.assertEqual(pyinflect.getInflection('xxban', 'VBG', inflect_oov=True),
+            ('xxbaning', 'xxbanning'))
+        self.assertEqual(pyinflect.getInflection('xxdim', 'JJR', inflect_oov=True),
+            ('xxdimer', 'xxdimmer'))
+
+    def testSpacyGetInfl(self):
+        tokens = self.nlp('xxtest this')
+        self.assertEqual(tokens[0]._.inflect('VBG', inflect_oov=False), None)
+        self.assertEqual(tokens[0]._.inflect('VBG', inflect_oov=True), 'xxtesting')
 
 
 if __name__ == '__main__':

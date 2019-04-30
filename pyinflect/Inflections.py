@@ -97,24 +97,25 @@ class Inflections(object):
         if pos_type == 'V':
             rv = InflectionRules.buildRegVerb(lemma)
             dv = InflectionRules.buildDoubledVerb(lemma)
-            forms = {'VBZ':(rv[0], dv[0]), 'VBN':(rv[1], dv[1]), 'VBD':(rv[1],dv[1]), \
-                     'VBG':(rv[2],dv[2])}
+            forms = {'VB':(lemma,), 'VBZ':(rv[0], dv[0]), 'VBN':(rv[1], dv[1]), \
+                     'VBD':(rv[1],dv[1]), 'VBG':(rv[2],dv[2])}
         elif pos_type == 'A':
             ra = InflectionRules.buildRegAdjAdv(lemma)
             da = InflectionRules.buildDoubledAdjAdv(lemma)
-            forms = {'JJR':(ra[0],da[0]), 'RBR':(ra[0],da[0]), \
+            forms = {'JJ':(lemma,), 'RB':lemma, \
+                     'JJR':(ra[0],da[0]), 'RBR':(ra[0],da[0]), \
                      'JJS':(ra[1],da[1]), 'RBS':(ra[1],da[1])}
         elif pos_type == 'N':
             rn = InflectionRules.buildRegNoun(lemma)
             gn = InflectionRules.buildGrecNoun(lemma)
-            forms = {'NNS':(rn[0],gn[0])}
+            forms = {'NN':(lemma,), 'NNS':(rn[0],gn[0])}
         else:
             raise ValueError('Unrecognized pos_type = %s' % pos_type)
         forms = self._applyCapsStyleToDict(forms, caps_style)
         return forms
 
     # Get all inflections in the DB
-    def getInflection(self, lemma, tag):
+    def getInflection(self, lemma, tag, inflect_oov=False):
         ''' Method for getting a lemma's inflection for a specific Penn Treebank tag.
 
         This is a standalone method that takes in a given lemma and returns
@@ -124,6 +125,8 @@ class Inflections(object):
             lemma (str): The lemma of the word to lookup
             tag (str):  Penn Treebank tag.  Returned data is limited to this category
                 if present.
+            inflect_oov (bool): if False only inflections from the AGID lookup are returned.
+            If True, InflectionRules via getAllInflectionsOOV will be used to find inflections.
 
         Returns:
             Method returns a tuple of the inflection(s).
@@ -131,12 +134,19 @@ class Inflections(object):
             None is returned if the lemma / tag is not found.
         '''
         # Get the forms for the lemma from the main database
+        # and use the treebank tag to find the correct return value
+        # If we don't find anything in the dictionary, use the rules
         forms = self.getAllInflections(lemma, None)
-        # Use the treebank tag to find the correct return value
+        if not forms and inflect_oov:
+            try:
+                pos_type = self._tagToAGIDPOSType(tag)
+                forms = self.getAllInflectionsOOV(lemma, pos_type)
+            except ValueError:
+                pass
         form = forms.get(tag, None)
         return form
 
-    def spacyGetInfl(self, token, tag, form_num=0):
+    def spacyGetInfl(self, token, tag, form_num=0, inflect_oov=False):
         ''' Spacy extension method "inflect"
 
         This function is not intended to be called directly.  It is an extension
@@ -159,7 +169,7 @@ class Inflections(object):
         # Fix this so the capitalization is always preserved in the lemma
         caps_style = self._getCapsStyle(token.text)
         lemma = self._applyCapsStyle(token.lemma_, caps_style)
-        tag_form = self.getInflection(lemma, tag)
+        tag_form = self.getInflection(lemma, tag, inflect_oov)
         if not tag_form:
             return None
         if form_num < len(tag_form):
