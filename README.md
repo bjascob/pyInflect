@@ -11,7 +11,7 @@ pip3 install pyinflect
 ## Usage as an Extension to Spacy
 To use with Spacy, you need Spacy version 2.0 or later.  Versions 1.9 and earlier do not support the extension methods used here.
 
-To use as an extension to Spacy, first import the module.  This will create a new `inflect` method for each Spacy `Token` that takes in a Penn Treebank tag as its parameter.  The method returns the inflected form of the token's lemma based on the supplied treekbank tag.
+To use as an extension to Spacy, first import the module.  This will create a new `inflect` method for each spaCy `Token` that takes a Penn Treebank tag as its parameter.  The method returns the inflected form of the token's lemma based on the supplied treekbank tag.
 ```
 > import spacy
 > import pyinflect
@@ -34,7 +34,7 @@ xxtesting
 > tokens[5]._.inflect('VBG', inflect_oov=True, form_num=1)
 xxtestting
 ```
-You will need to figure out yourself which form_num to use, however there are basic helper functions in `pyinflect.InflectionRules` which can make a guess if the lemma uses a "doubling" or "Greco-Latin" style rules.
+You will need to figure out yourself which form_num to use.  There are basic helper functions in `pyinflect.InflectionRules` which can make a guess if the lemma uses "doubling" or "Greco-Latin" style rules.
 
 
 ## Usage Standalone
@@ -58,7 +58,7 @@ The method `getInflection` takes the parameter `inflect_oov` and uses it similar
 
 ## Issues:
 If you find a bug, please report it on the **[GitHub issues list](https://github.com/bjascob/pyInflect/issues)**.  However be aware that when in comes to returning the correct inflection there are a number of different types of issues that can arise.  Some of these are not  readily fixable.  Issues with inflected forms include...
-* Multiple accepted spellings for an inflection (ie.. armamentariums vs. armamentaria)
+* Multiple spellings for an inflection (ie.. arthroplasties, arthroplastyes or arthroplastys)
 * Mass form and plural types (ie.. people vs peoples)
 * Forms that depend on context (ie.. further vs farther)
 * Infections that are not fully specified by the tag (ie.. be/VBD can be "was" or "were")
