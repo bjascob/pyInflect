@@ -151,6 +151,12 @@ class InflectionRulesTests(unittest.TestCase):
         self.assertEqual(tokens[0]._.inflect('VBG', inflect_oov=False), None)
         self.assertEqual(tokens[0]._.inflect('VBG', inflect_oov=True), 'xxtesting')
 
+    def testUseMethods(self):
+        self.assertTrue(pyinflect.InflectionRules.useDoublingMethod('ban'))
+        self.assertFalse(pyinflect.InflectionRules.useDoublingMethod('waltz'))
+        self.assertTrue(pyinflect.InflectionRules.useGrecoMethod('focus'))
+        self.assertFalse(pyinflect.InflectionRules.useGrecoMethod('fly'))
+
 
 if __name__ == '__main__':
     # run all methods that start with 'test'
