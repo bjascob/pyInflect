@@ -7,8 +7,10 @@ import pyinflect
 from   MiscUtils import loadNLTKCorpus, ignoreWord
 
 
+# Script to run through a corpus and use spacy to tag and lemmatize words.  These are then
+# reinflected back to their original form and an error is printed if that inflections differs
+# from the original word.
 if __name__ == '__main__':
-
     # Configuration
     corp_fn   = 'austen-emma.txt'   # to see available do... print(nltk.corpus.gutenberg.fileids())
     max_chars = int(1e5)

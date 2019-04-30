@@ -47,6 +47,7 @@ def getTestClass(fn):
             my_class_tuple = class_tuple
     return my_class_tuple
 
+
 # Note: to capture output, run: `./RunAllUnitTests.py | tee test.log`
 if __name__ == '__main__':
     test_fns = getAllPythonFiles('..' + os.sep + 'tests')
