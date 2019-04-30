@@ -47,4 +47,6 @@ edit Makefile and add (be sure to use tabs not spaces)..
         rm -f ./source/modules.rst
         rm -rf build
 
+touch _static/.gitkeep
+touch _templates/.gitkeep
 
