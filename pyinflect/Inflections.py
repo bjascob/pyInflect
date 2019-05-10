@@ -201,7 +201,11 @@ class Inflections(object):
                 line = line.strip()
                 lemma, tag, forms = line.split(',')
                 forms = tuple(forms.split('/'))
-                data[lemma] = {tag:forms}
+                entry = {tag:forms}
+                if lemma not in data:
+                    data[lemma] = entry
+                else:
+                    data[lemma].update(entry)
         return data
 
     # Converts the Penn Treebank tag string to V, A or N
