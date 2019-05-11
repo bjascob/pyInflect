@@ -1,6 +1,8 @@
 # pyinflect<br/>
 **A python module for word inflections that works as a spaCy extension**.
 
+--> Note that a more sophisticated system now exists in **[LemmInflect](https://github.com/bjascob/LemmInflect)** which includes both lemmatization and inflection, along with more advanced methods for word form disambiguation.  You might want to try that module first if you're looking for top performance.
+
 This module is designed as an extension for **[spaCy](https://github.com/explosion/spaCy)** and will return the the inflected form of a word based on a supplied Penn Treekbank part-of-speech tag.  It can also be used a standalone module outside of Spacy. It is based on the **[Automatically Generated Inflection Database (AGID)](http://wordlist.aspell.net/other)**.  The AGID data provides a list of inflections for various word lemma. See the `scripts` directory for utilities that make good examples or the `tests` directory for unit tests / examples.
 
 ## Installation
