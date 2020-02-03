@@ -28,7 +28,7 @@ class Inflections(object):
             mv = min_version.split('.')
             sv = spacy.__version__.split('.')
             if sv[0] > mv[0] or (sv[0] == mv[0] and sv[1] >= mv[1]):
-                spacy.tokens.Token.set_extension('inflect', method=self.spacyGetInfl)
+                spacy.tokens.Token.set_extension('inflect', method=self.spacyGetInfl, force=True)
             else:
                 logging.warning('Spacy extensions are disabled.  Spacy version is %s.  '
                                 'A minimum of %s is required', spacy.__version__, min_version)

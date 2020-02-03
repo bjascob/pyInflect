@@ -145,8 +145,10 @@ class InflectionRulesTests(unittest.TestCase):
         self.assertEqual(pyinflect.getInflection('xxdim', 'JJR', inflect_oov=True),
             ('xxdimer', 'xxdimmer'))
 
+    @unittest.skip("Skipping. SpaCy v2.2.3 lemmatizer error.  Switch to Lemminflect to fix.")
     def testSpacyGetInfl(self):
         tokens = self.nlp('xxtest this')
+        self.assertEqual(tokens[0].lemma_, 'xxtest')    # spacy lemmatizer error (spacy v2.2.3)
         self.assertEqual(tokens[0]._.inflect('VBG', inflect_oov=False), None)
         self.assertEqual(tokens[0]._.inflect('VBG', inflect_oov=True), 'xxtesting')
 

@@ -5,3 +5,4 @@ build/
 dist/
 docs/build
 pyinflect.egg-info/
+.private/
